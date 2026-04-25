@@ -11,8 +11,6 @@
   background: linear-gradient(135deg, #0f172a, #1e293b, #020617);
   background-size: cover;
   padding: 20px;
-  
-
 }
 .overlay {
   width: 100%;
@@ -42,7 +40,6 @@
   padding-bottom: 0%;
    box-shadow:0 30px 70px rgba(0,0,0,.35);
   animation:slideUp .8s ease;
- 
  
 
 }
