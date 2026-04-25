@@ -24,8 +24,8 @@
 </head>
 
 <body>
-    <div class="background col-12">
-        <div class="overlay " id="sectionlogin">
+    <div id="sectionlogin">
+        <div class="overlay background col-12">
             <div class="login-card ">
                 <h1 class="main-heading">Mind Arena</h1>
                 <p class="para text-center">Check your IQ Levels</p>
@@ -40,37 +40,37 @@
 
             </div>
         </div>
+    </div>
+    <div id="sectiontest" style="display:none;">
+        <div class="background col-12">
+            <p class="previous-toogle" onclick="display('sectionlogin')">&#8592 </p>
+            <p class="welcome ">WELCOME</p>
+            <h1 class="text-center user-heading" id="display-username"></h1>
+            <p class="tag text-center">Choose your challenge</p>
 
-        <div id="sectiontest" style="display:none;">
-
-                <p class="previous-toogle" onclick="display('sectionlogin')">&#8592 </p>
-                <p class="welcome ">WELCOME</p>
-                <h1 class="text-center user-heading" id="display-username"></h1>
-                <p class="tag text-center">Choose your challenge</p>
-            </div>
             <div class="row">
                 <div class="games col-sm-12 col-12 col-md-6 col-lg-3 ">
-                    <img src="https://img.freepik.com/premium-vector/repetition-number-twenty-forming-logo-design-showcasing-numerical-pattern-poster-that-captures-essence-our-open-positions_585735-34266.jpg" alt="number-series"
-                        class="game-image" />
-                        <br>
+                    <img src="https://img.freepik.com/premium-vector/repetition-number-twenty-forming-logo-design-showcasing-numerical-pattern-poster-that-captures-essence-our-open-positions_585735-34266.jpg"
+                        alt="number-series" class="game-image" />
+                    <br>
                     <h2 class="game-heading ">Number Pattern</h2>
                     <p class="game-para ">Predict what comes next</p>
                     <br>
                     <button class="game-button">Play</button>
                 </div>
-                 <div class="games col-sm-12 col-12 col-md-6 col-lg-3 ">
-                    <img src="https://cdn.iconscout.com/icon/premium/png-256-thumb/missing-number-sticker-icon-svg-download-png-4416041.png" alt="number-series"
-                        class="game-image" />
-                        <br>
+                <div class="games col-sm-12 col-12 col-md-6 col-lg-3 ">
+                    <img src="https://cdn.iconscout.com/icon/premium/png-256-thumb/missing-number-sticker-icon-svg-download-png-4416041.png"
+                        alt="number-series" class="game-image" />
+                    <br>
                     <h2 class="game-heading ">Missing Number</h2>
                     <p class="game-para ">Find the missing piece</p>
                     <br>
                     <button class="game-button">Play</button>
                 </div>
-                 <div class="games col-sm-12 col-12 col-md-6 col-lg-3 ">
+                <div class="games col-sm-12 col-12 col-md-6 col-lg-3 ">
                     <img src="https://cdn-icons-png.flaticon.com/512/7880/7880465.png" alt="number-series"
                         class="game-image" />
-                        <br>
+                    <br>
                     <h2 class="game-heading ">Word Scramble</h2>
                     <p class="game-para ">Unscramble the hidden word</p>
                     <br>
@@ -79,19 +79,10 @@
             </div>
         </div>
     </div>
-<div>efwrf</div>
 
-
-
-
-
-
-
-
-
-
-    <script type="text/javascript"
-        src="https://new-assets.ccbp.in/frontend/content/static-ccbp-ui-kit/static-ccbp-ui-kit.js"></script>
+    </ <script type="text/javascript"
+        src="https://new-assets.ccbp.in/frontend/content/static-ccbp-ui-kit/static-ccbp-ui-kit.js">
+    </script>
     <py-config>
         [[fetch]]
         files = ["iq.py"]
