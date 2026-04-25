@@ -166,3 +166,25 @@ transform:translateY(-2px);
   object-fit:cover;
   border-radius:10px;
 }
+.back-reasoning{
+  background-color: black ;
+  height: 100vh;
+  display:flex;
+  justify-content: center;
+
+}
+.head-reasoning{
+  text-align: center;
+  margin:20px;
+  font-family:"fantasy";
+  font-size:28px;
+  color:bisque;
+}
+.card-reasoning{
+  background:linear-gradient(to bottom, darkolivegreen,dimgray  );
+  height: 400px;
+  width:330px;
+  border-radius:10px;
+  color:white;
+  padding:10px
+}
