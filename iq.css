@@ -11,6 +11,7 @@
   background: linear-gradient(135deg, #0f172a, #1e293b, #020617);
   background-size: cover;
   padding: 20px;
+  width: 100vw;
 }
 .overlay {
   width: 100%;
@@ -112,6 +113,74 @@ input {
   font-weight: 100;
   font-family:caveat;
 }
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background: radial-gradient(circle at top, #1a1a2e, #000);
+    font-family: Arial, sans-serif;
+}
+
+.card-start{
+    width:340px;
+    padding:25px;
+    border-radius:20px;
+    background:transparent;
+ backdrop-filter: blur(1px);
+    box-shadow: 0 0 25px rgba(207, 11, 21, 0.2);
+    text-align:center;
+    color:transparent;
+    animation: fadeIn 1s ease;
+}
+.card-start h1{
+    font-size:26px;
+    color:white;
+    margin-bottom:12px;
+    letter-spacing:1px;
+}
+.card-start p{
+    font-size:14px;
+    opacity:0.85;
+    line-height:1.6;
+}
+
+.start-btn{
+    margin-top:20px;
+    padding:12px 28px;
+    border:none;
+    border-radius:10px;
+    font-size:16px;
+    color:white;
+    background: linear-gradient(45deg,#9f8fad,#dd1b1b);
+    cursor:pointer;
+    box-shadow:0 0 15px #a1a3a3;
+    transition:0.3s ease;
+    animation:pulse 1.5s infinite;
+}
+
+.btn:hover{
+    transform:scale(1.12);
+    box-shadow:0 0 30px #232525;
+}
+
+@keyframes pulse{
+    0%{transform:scale(1);}
+    50%{transform:scale(1.05);}
+    100%{transform:scale(1);}
+}
+
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:translateY(20px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
 .games{
   width: 100%;
   max-width: 320px;
@@ -182,11 +251,16 @@ transform:translateY(-2px);
 }
 .card-reasoning{
   background:linear-gradient(to bottom, rgb(115, 130, 88),dimgray  );
-  height: 400px;
-  width:330px;
+  height: auto;
+  width: 350px;
   border-radius:10px;
   color:white;
-  padding:10px
+  padding:24px;
+  justify-content: center;
+  display:flex;
+  flex-direction: column;
+  margin-top: 90px;
+
 }
 .exit{
   color:white;
@@ -199,8 +273,9 @@ transform:translateY(-2px);
   font-family: monospace;
   color:lavenderblush;
   margin:10px;
+  text-align: center;
 }
-.option{
+.opt{
   background-color: rgba(0,0,0,.25);
   color:white;
   width:280px;
@@ -213,8 +288,22 @@ transform:translateY(-2px);
 .nxt{
   display:flex;
   flex-direction: row;
-  justify-content: end;
+  justify-content: center;
   margin:10px;
-  font-weight: bold;
-
+  cursor: pointer;
+  border-radius:5px ;
+  width:60px;
+  height:30px;
+  border:0px;
+  
+}
+.timer{
+  font-size:17px;
+  color:white;
+}
+.msg{
+  font-size:36px;
+  color:white;
+  text-align: center;
+  margin:10px;
 }
