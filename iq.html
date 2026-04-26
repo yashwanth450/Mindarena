@@ -24,8 +24,8 @@
 </head>
 
 <body>
-    <div id="sectionlogin">
-        <div class=" background col-12">
+    <div id="sectionlogin" class="col-12">
+        <div class=" background d-flex flex-column align-items-center">
             <div class="login-card ">
                 <h1 class="main-heading">Mind Arena</h1>
                 <p class="para text-center">Check your IQ Levels</p>
@@ -41,8 +41,8 @@
             </div>
         </div>
     </div>
-    <div id="sectiontest" style="display:none;">
-        <div class=" background col-12">
+    <div id="sectiontest" class="col-12" style="display:none;">
+        <div class=" background d-flex flex-column justify-content-center align-items-center">
             <p class="previous-toogle" id="back">&#8592 </p>
             <p class="welcome ">WELCOME</p>
             <h1 class="text-center user-heading" id="display-username"></h1>
@@ -78,49 +78,50 @@
             </div>
         </div>
     </div>
-    <div id="sectionstart" style="display:none;">
-        <div class="card-start col-12">
-            <h1>Are U Ready</h1>
-            <br>
-            <br>
+    <div id="sectionstart" class="col-12" style="display:none;">
+        <div class="background d-flex flex-row justify-content-center align-items-center">
+            <div class="card-start ">
+                <h1>Are U Ready</h1>
+                <br>
+                <br>
 
-            <p class="para">
-                Only a few can pass this test without mistakes.<br>
-                Speed + Logic + Focus = Victory<br><br>
-                Are you ready to prove your intelligence?
-            </p>
-            <br>
+                <p class="para">
+                    Only a few can pass this test without mistakes.<br>
+                    Speed + Logic + Focus = Victory<br><br>
+                    Are you ready to prove your intelligence?
+                </p>
+                <br>
 
-            <button class="start-btn" id="end">
-                🚀 Let’s Play
-            </button>
+                <button class="start-btn" id="end">
+                    🚀 Let’s Play
+                </button>
+            </div>
         </div>
-
     </div>
 
-    <div id="sectionReasoning" style="display:none;">
-        <div class="back-reasoning col-12 ">
-            <div class="d-flex flex-column">
-                <h1 class="head-reasoning">Logical Reasoning</h1>
-                <div class="card-reasoning">
-                    <div class="d-flex flex-row justify-content-between">
-                        <p id="exit" class="exit">EXIT</p>
-                        <h3 id="timer" class="timer"></h3>
-                    </div>
-                    <h1 class="question" id="question"></h1>
-                    <div id="options">
-                        <button class="opt">1</button>
-                        <button class="opt">2</button>
-                        <button class="opt">3</button>
-                        <button class="opt">4</button>
-                    </div>
-                    <h3 id="msg" class="msg"></h3>
-                    <div class="d-flex flex-row justify-content-center">
-                        <button class="nxt" id="next" style="display: none;">NEXT</button>
-                    </div>
+    <div id="sectionReasoning" class="col-12" style="display:none;">
+        <div class="back-reasoning d-flex flex-column justify-content-start align-items-center">
 
+            <h1 class="head-reasoning">Logical Reasoning</h1>
+            <div class="card-reasoning">
+                <div class="d-flex flex-row ">
+                    <p id="exit" class="exit">EXIT</p>
+                    <h3 id="timer" class="timer ml-auto"></h3>
                 </div>
+                <h1 class="question" id="question"></h1>
+                <div id="options">
+                    <button class="opt">1</button>
+                    <button class="opt">2</button>
+                    <button class="opt">3</button>
+                    <button class="opt">4</button>
+                </div>
+                <h3 id="msg" class="msg"></h3>
+                <div class="d-flex flex-row justify-content-center">
+                    <button class="nxt" id="next" style="display: none;">NEXT</button>
+                </div>
+
             </div>
+
         </div>
     </div>
 
