@@ -98,6 +98,7 @@ input {
   font-weight: 100;
   cursor:pointer;
 
+
 }
 .welcome{
   color:white;
@@ -116,9 +117,6 @@ input {
 body{
     margin:0;
     height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
     background: radial-gradient(circle at top, #1a1a2e, #000);
     font-family: Arial, sans-serif;
 }
@@ -306,4 +304,11 @@ transform:translateY(-2px);
   color:white;
   text-align: center;
   margin:10px;
+}
+.scoreboard{
+  font-size:17px;
+  color:yellow;
+  font-weight: bold;
+  margin-left:80px ;
+ 
 }

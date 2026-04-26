@@ -42,12 +42,12 @@
         </div>
     </div>
     <div id="sectiontest" class="col-12" style="display:none;">
-        <div class=" background d-flex flex-column justify-content-center align-items-center">
-            <p class="previous-toogle" id="back">&#8592 </p>
-            <p class="welcome ">WELCOME</p>
+        <div class=" background d-flex flex-column justify-content-center align-items-center ">
+            <p class="previous-toogle mr-auto" id="back">&#8592 </p>
+             <p class="welcome ">WELCOME</p>
             <h1 class="text-center user-heading" id="display-username"></h1>
             <p class="tag text-center">Choose your challenge</p>
-            <div class="row">
+            <div class="d-flex flex-row justify-content-center align-items-center flex-wrap">
                 <div class="games col-sm-12 col-12 col-md-6 col-lg-3 ">
                     <img src="https://img.freepik.com/premium-vector/repetition-number-twenty-forming-logo-design-showcasing-numerical-pattern-poster-that-captures-essence-our-open-positions_585735-34266.jpg"
                         alt="number-series" class="game-image" />
@@ -55,7 +55,7 @@
                     <h2 class="game-heading ">Logical Reasoning</h2>
                     <p class="game-para ">Time to use your BRAIN..</p>
                     <br>
-                    <button class="game-button" id="play" onclick="display('sectionReasoning')">Play</button>
+                    <button class="game-button" id="play" >Play</button>
                 </div>
                 <div class="games col-sm-12 col-12 col-md-6 col-lg-3 ">
                     <img src="https://cdn.iconscout.com/icon/premium/png-256-thumb/missing-number-sticker-icon-svg-download-png-4416041.png"
@@ -106,7 +106,8 @@
             <div class="card-reasoning">
                 <div class="d-flex flex-row ">
                     <p id="exit" class="exit">EXIT</p>
-                    <h3 id="timer" class="timer ml-auto"></h3>
+                     <p id="score-card" class="scoreboard ">score:0</p>
+                    <h3 id="timer" class="timer ml-auto "></h3>
                 </div>
                 <h1 class="question" id="question"></h1>
                 <div id="options">
@@ -116,6 +117,8 @@
                     <button class="opt">4</button>
                 </div>
                 <h3 id="msg" class="msg"></h3>
+                <p id="brand" class="text-center"></p>
+                <p id="ad" class="text-center"></p>
                 <div class="d-flex flex-row justify-content-center">
                     <button class="nxt" id="next" style="display: none;">NEXT</button>
                 </div>
