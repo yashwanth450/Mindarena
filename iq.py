@@ -91,11 +91,7 @@ def show_question():
 def choose_option(e):
     global answered
 
-    if answered:
-        return
-
-    answered = True
-    clearInterval(timer_id)
+    
 
     document.getElementById("next").style.display = "block"
 def time_up():
