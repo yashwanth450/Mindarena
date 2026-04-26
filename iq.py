@@ -37,7 +37,6 @@ exit=document.getElementById("exit")
 exit.addEventListener("click", create_proxy(games))
 
 
-# ---------------- DATA ----------------
 questions = [ """2+3 = 10, 7+2 = 63, 6+5 = 66, 8+4 = 96 then what is the value of 9+3 = ?""",
              """ If 12$34 = 10, 2$9 = 11 then what is the value of 6$27 = ?""",
              """If in a certain code, RAIN is written as 81#4 and CLOUD is written as 92#6, how will WIND be written?"""
