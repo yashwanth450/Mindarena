@@ -43,7 +43,7 @@
     </div>
     <div id="sectiontest" style="display:none;">
         <div class=" background col-12">
-            <p class="previous-toogle" onclick="display('sectionlogin')">&#8592 </p>
+            <p class="previous-toogle" id="back">&#8592 </p>
             <p class="welcome ">WELCOME</p>
             <h1 class="text-center user-heading" id="display-username"></h1>
             <p class="tag text-center">Choose your challenge</p>
@@ -55,7 +55,7 @@
                     <h2 class="game-heading ">Logical Reasoning</h2>
                     <p class="game-para ">Time to use your BRAIN..</p>
                     <br>
-                    <button class="game-button" onclick="display('sectionReasoning')">Play</button>
+                    <button class="game-button" id="play" onclick="display('sectionReasoning')">Play</button>
                 </div>
                 <div class="games col-sm-12 col-12 col-md-6 col-lg-3 ">
                     <img src="https://cdn.iconscout.com/icon/premium/png-256-thumb/missing-number-sticker-icon-svg-download-png-4416041.png"
@@ -78,13 +78,13 @@
             </div>
         </div>
     </div>
-    <div id="sectionReasoning">
-        <div class="back-reasoning">
+    <div id="sectionReasoning" style="display:none;">
+        <div class="back-reasoning" col-12 ">
             <div class="d-flex flex-column">
                 <h1 class="head-reasoning">Logical Reasoning</h1>
                 <div class="card-reasoning">
                     <div class="d-flex flex-row">
-                        <p onclick="display('sectionlogin')">EXIT</p>
+                        <p id="exit" class="exit">EXIT</p>
                         <p class="ml-auto">Time</p>
                     </div>
                     <p>Question.... </p>
