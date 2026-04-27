@@ -43,15 +43,43 @@ questions = [ """Tanya is older than Eric.
                  Eric is older than Cliff.
                  If the first two statements are true, the third statement is """,
              """ If 12$34 = 10, 2$9 = 11 then what is the value of 6$27 = ?""",
-             """If in a certain code, RAIN is written as 81#4 and CLOUD is written as 92#6, how will WIND be written?"""
-              ]
+             """If in a certain code, RAIN is written as 81#4 and CLOUD is written as 92#6, how will WIND be written?""",
+                "2, 6, 7, 21, 22, ?",
+                "1, 1, 2, 3, 5, 8, ?",
+                 "3, 9, 27, 81, ?",
+                 "4, 6, 9, 13, 18, ?",
+                "If CAT = 24, DOG = 26, then BAT = ?",
+                  "Find missing: 2, 10, 12, 60, 62, ?",
+                "What comes next: Z, X, U, Q, ?",
+                "If 5x = 20, then x = ?",
+                 "A number doubled is 50. What is the number?",
+                 "If 12 + 15 = 33, 13 + 16 = 35, then 14 + 17 = ?",
+                "Which number is odd one out?",
+               "Which word is different?",
+                  "If all Bloops are Razzies and all Razzies are Lazzies, then all Bloops are?"
+                ]
 
 options_list = [
     ["False", "True", "Uncertain", "No Enough Information"],
     ["33", "15", "20", "10"],
-    ["71#6", "92#5", "91#5", "82#"]
+    ["71#6", "92#5", "91#5", "82#"],
+    ["44", "66", "23", "11"],
+    ["11", "13", "10", "15"],
+    ["162", "243", "108", "324"],
+    ["22", "23", "24", "25"],
+    ["21", "23", "25", "27"],
+    ["300", "310", "320", "360"],
+    ["M", "N", "O", "L"],
+    ["2", "3", "4", "5"],
+    ["20", "25", "30", "15"],
+    ["37", "36", "38", "39"],
+    ["121", "144", "169", "145"],
+    ["Apple", "Banana", "Carrot", "Mango"],
+    ["Lazzies", "Not Lazzies", "Some Lazzies", "None"]
 ]
-answers=["False","33","91#5"]
+
+answers=["False","33","91#5","66", "13", "243", "24", "23", "310", "M", "4", "25", "37", "145", "Carrot", "Lazzies"]
+
 current = 0
 answered = False
 time_left = 15
