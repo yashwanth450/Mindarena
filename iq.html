@@ -24,8 +24,8 @@
 </head>
 
 <body>
-    <div id="sectionlogin" class="col-12">
-        <div class=" background d-flex flex-column align-items-center">
+    <div id="sectionlogin" class="col-12 p-0">
+        <div class=" background-login d-flex flex-column align-items-center justify-content-center ">
             <div class="login-card ">
                 <h1 class="main-heading">Mind Arena</h1>
                 <p class="para text-center">Check your IQ Levels</p>
@@ -34,28 +34,48 @@
 
                 <label class="para">Age :</label>
                 <input type="text" id="age" placeholder="Age(in years)" required />
-                <br>
                 <button type="button" id="btn" class="card-button">Enter</button>
                 <p class="ad text-center">Presented by SyrX</p>
 
             </div>
         </div>
     </div>
-    <div id="sectiontest" class="col-12" style="display:none;">
-        <div class=" background d-flex flex-column justify-content-center align-items-center ">
-            <p class="previous-toogle mr-auto" id="back">&#8592 </p>
-             <p class="welcome ">WELCOME</p>
+    <div id="sectiontest" class="col-12 p-0" style="display:none;">
+        <div class=" background d-flex flex-column  align-items-center ">
+            <div class="styled-wrapper mr-auto" id="back">
+                <button class="button">
+                    <div class="button-box">
+                        <span class="button-elem">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="arrow-icon">
+                                <path fill="black" d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z">
+                                </path>
+                            </svg>
+                        </span>
+                        <span class="button-elem">
+                            <svg fill="black" viewBox="0 0  24 24" xmlns="http://www.w3.org/2000/svg"
+                                class="arrow-icon">
+                                <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path>
+                            </svg>
+                        </span>
+                    </div>
+                </button>
+            </div>
+
+            <p class="welcome ">Welcome</p>
             <h1 class="text-center user-heading" id="display-username"></h1>
-            <p class="tag text-center">Choose your challenge</p>
+            <p class="tag text-center">Complete this <span class="tag-highlighter">3 games</span> to unlock your IQ
+                score.
+            </p>
             <div class="d-flex flex-row justify-content-center align-items-center flex-wrap">
                 <div class="games col-sm-12 col-12 col-md-6 col-lg-3 ">
                     <img src="https://img.freepik.com/premium-vector/repetition-number-twenty-forming-logo-design-showcasing-numerical-pattern-poster-that-captures-essence-our-open-positions_585735-34266.jpg"
                         alt="number-series" class="game-image" />
+                    <span id="tick-reasoning" class="tick" style="display:none;">✔️</span>
                     <br>
                     <h2 class="game-heading ">Logical Reasoning</h2>
                     <p class="game-para ">Time to use your BRAIN..</p>
                     <br>
-                    <button class="game-button" id="play" >Play</button>
+                    <button class="animated-button" id="play">Play</button>
                 </div>
                 <div class="games col-sm-12 col-12 col-md-6 col-lg-3 ">
                     <img src="https://cdn.iconscout.com/icon/premium/png-256-thumb/missing-number-sticker-icon-svg-download-png-4416041.png"
@@ -64,7 +84,7 @@
                     <h2 class="game-heading ">Missing Number</h2>
                     <p class="game-para ">Find the missing piece</p>
                     <br>
-                    <button class="game-button">Play</button>
+                    <button class="animated-button">Play</button>
                 </div>
                 <div class="games col-sm-12 col-12 col-md-6 col-lg-3 ">
                     <img src="https://cdn-icons-png.flaticon.com/512/7880/7880465.png" alt="number-series"
@@ -73,45 +93,26 @@
                     <h2 class="game-heading ">Word Scramble</h2>
                     <p class="game-para ">Unscramble the hidden word</p>
                     <br>
-                    <button class="game-button">Play</button>
+                    <button class="animated-button">Play</button>
                 </div>
             </div>
-        </div>
-    </div>
-    <div id="sectionstart" class="col-12" style="display:none;">
-        <div class="background d-flex flex-row justify-content-center align-items-center">
-            <div class="card-start ">
-                <h1>Are U Ready</h1>
-                <br>
-                <br>
 
-                <p class="para">
-                    Only a few can pass this test without mistakes.<br>
-                    Speed + Logic + Focus = Victory<br><br>
-                    Are you ready to prove your intelligence?
-                </p>
-                <br>
-
-                <button class="start-btn" id="end">
-                    🚀 Let’s Play
-                </button>
-            </div>
         </div>
     </div>
 
-    <div id="sectionReasoning" class="col-12" style="display:none;">
-        <div class="back-reasoning d-flex flex-column justify-content-start align-items-center">
+    <div id="sectionReasoning" class="col-12 p-0" style="display:none;">
+        <div class="back-reasoning d-flex flex-column justify-content-center align-items-center">
 
             <h1 class="head-reasoning">Logical Reasoning</h1>
             <div class="card-reasoning">
                 <div class="d-flex flex-row ">
                     <p id="exit" class="exit">EXIT</p>
-                     <p id="score-card" class="scoreboard ">score:0</p>
+                    <p id="score-card" class="scoreboard ">score:0</p>
                     <h3 id="timer" class="timer ml-auto "></h3>
                 </div>
                 <h1 class="question" id="question"></h1>
-                <div id="options">
-                    <button class="opt">1</button>
+                <div id="options" >
+                    <button class=" opt">1</button>
                     <button class="opt">2</button>
                     <button class="opt">3</button>
                     <button class="opt">4</button>
@@ -127,7 +128,7 @@
 
         </div>
     </div>
-   
+
 
     </ <script type="text/javascript"
         src="https://new-assets.ccbp.in/frontend/content/static-ccbp-ui-kit/static-ccbp-ui-kit.js">

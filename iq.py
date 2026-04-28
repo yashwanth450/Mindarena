@@ -2,12 +2,46 @@ from js import document, setInterval, clearInterval
 from pyodide.ffi import create_proxy
 
 def username(e):
-    
-    name = document.getElementById("name").value
-    document.getElementById("display-username").innerText = f" {name}".upper()
-    
-    document.getElementById("sectionlogin").style.display = "none"
-    document.getElementById("sectiontest").style.display = "block"
+    # 1. Get the inputs and values
+    name_input = document.getElementById("name")
+    age_input = document.getElementById("age")
+    name = name_input.value.strip()
+    age = age_input.value.strip()
+     # 2. Helper function to show/remove errors
+    def handle_error(input_element, error_id, message):
+        existing_error = document.getElementById(error_id)
+        if not input_element.value.strip():
+            if not existing_error:
+                # Create a new error paragraph
+                err = document.createElement("p")
+                err.id = error_id
+                err.innerText = message
+                err.style.color = "#eb0a0a"
+                err.style.fontSize = "15px"
+                err.style.marginTop = "5px"
+                err.style.fontfamily = "Arial, sans-serif"
+                err.style.fontweight = "bold"
+                err.style.backgroundColor = "white"
+                err.style.padding = "5px"
+                err.style.borderRadius = "5px"
+                
+                input_element.parentNode.insertBefore(err, input_element.nextSibling)
+            return False 
+        else:
+            if existing_error:
+                existing_error.remove()
+            return True # Validation passed
+
+    # 3. Run validation for both fields
+    name_valid = handle_error(name_input, "name-err", "⚠️ Please enter your name")
+    age_valid = handle_error(age_input, "age-err", "⚠️ Please enter your age")
+
+    if name_valid and age_valid:
+        document.getElementById("display-username").innerText = f" {name}".upper()
+        document.getElementById("sectionlogin").style.display = "none"
+        document.getElementById("sectiontest").style.display = "block"
+
+
 btn = document.getElementById("btn")
 btn.addEventListener("click", create_proxy(username))
 
@@ -19,17 +53,10 @@ back.addEventListener("click", create_proxy(home))
 
 def display(sectionId):
     document.getElementById("sectiontest").style.display = "none"
-    document.getElementById("sectionstart").style.display = "block"
-play=document.getElementById("play")
-play.addEventListener("click", create_proxy(display))
-
-def start(_):
-    document.getElementById("sectionstart").style.display = "none"
     document.getElementById("sectionReasoning").style.display = "block"
     start_game()
-end=document.getElementById("end")
-end.addEventListener("click", create_proxy(start))
-
+play=document.getElementById("play")
+play.addEventListener("click", create_proxy(display))
 
 def games(_):
     document.getElementById("sectionReasoning").style.display = "none"
@@ -126,19 +153,34 @@ def show_question():
 
     start_timer()
 def choose_option(e):
-    global answered, score, current # We need 'current' to know which answer to check
+    global answered, score
 
-    if answered: 
+    if answered:
         return
-    # 2. STOP THE TIMER IMMEDIATELY (for both right and wrong answers)
+
+    clearInterval(timer_id)
+    answered = True
+
     user_choice = e.target.innerText
-    if user_choice == answers[current]:
-        answered = True
-        score += 1
-        document.getElementById("score-card").innerText = f"Score: {score}"
+    correct = answers[current]
 
-    
+    opts = document.getElementsByClassName("opt")
 
+    for i in range(len(opts)):
+        option_text = opts[i].innerText
+
+        if option_text == correct:
+            # ✅ correct answer → always green
+            opts[i].style.backgroundColor = "#2ecc71"
+            opts[i].style.color = "white"
+
+        elif option_text == user_choice:
+            # ❌ wrong selected → red
+            opts[i].style.backgroundColor = "#e74c3c"
+            opts[i].style.color = "white"
+    if user_choice == correct:
+         score += 1
+    document.getElementById("score-card").innerText = f"Score: {score}"
     document.getElementById("next").style.display = "block"
 def time_up():
     global answered
@@ -191,7 +233,7 @@ for i in range(len(opts)):
 document.getElementById("next").addEventListener("click", create_proxy(next_q))
 
 def display_game(e):
-    document.getElementById("sectionstart").style.display = "none"
+    document.getElementById("sectiontest").style.display = "none"
     document.getElementById("sectionReasoning").style.display = "block"
     start_game()
 def scoreboard():
