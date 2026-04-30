@@ -87,18 +87,7 @@ questions = [ """Tanya is older than Eric.
              """ If 12$34 = 10, 2$9 = 11 then what is the value of 6$27 = ?""",
              """If in a certain code, RAIN is written as 81#4 and CLOUD is written as 92#6, how will WIND be written?""",
                 "2, 6, 7, 21, 22, ?",
-                "1, 1, 2, 3, 5, 8, ?",
-                 "3, 9, 27, 81, ?",
-                 "4, 6, 9, 13, 18, ?",
-                "If CAT = 24, DOG = 26, then BAT = ?",
-                  "Find missing: 2, 10, 12, 60, 62, ?",
-                "What comes next: Z, X, U, Q, ?",
-                "If 5x = 20, then x = ?",
-                 "A number doubled is 50. What is the number?",
-                 "If 12 + 15 = 33, 13 + 16 = 35, then 14 + 17 = ?",
-                "Which number is odd one out?",
-               "Which word is different?",
-                  "If all Bloops are Razzies and all Razzies are Lazzies, then all Bloops are?"
+               
                 ]
 
 options_list = [
@@ -127,6 +116,7 @@ answered = False
 time_left = 15
 timer_id = None
 score=0
+games_completed=0
 
 def start_timer():
     global timer_id, time_left, answered
@@ -212,7 +202,7 @@ def time_up():
     document.getElementById("next").style.display = "block"
 
 def next_q(e=None):
-    global current, answered,score
+    global current, answered,score,games_completed
 
     clearInterval(timer_id)
     answered = False
@@ -226,11 +216,24 @@ def next_q(e=None):
         document.getElementById("question").innerText = "Quiz Finished 🎉"
         document.getElementById("options").style.display = "none"
         document.getElementById("next").style.display = "none"
-        document.getElementById("timer").innerText = ""
+        document.getElementById("timer").style.display = "none"
         document.getElementById("msg").innerText = f"Your Final Score: {score} / {len(questions)}"
-        document.getElementById("brand").innerText = "Presented by SyrX"
-        document.getElementById("ad").innerText = "Co-Founders- Saketh & Yashwanth"
-
+       
+        if(games_completed >= 0):
+            games_completed=games_completed+1
+            if(games_completed==2):
+                  document.getElementById("games_completed").innerText = "View your IQ score"
+                  document.getElementById("games_completed").disabled = False
+                  document.getElementById("games_completed").style.opacity = "1"
+               
+            else:
+                   document.getElementById("games_completed").innerText = str(int(2-games_completed))+" more to go !"
+                   document.getElementById("games_completed").disabled = True
+                   document.getElementById("games_completed").style.opacity = "0.5"
+        document.getElementById("tick-reasoning").style.display = "inline"
+        document.getElementById("play").disabled = True
+        document.getElementById("play").style.opacity = "0.5"
+      
 
 def start_game(e=None):
     global current,score
@@ -264,19 +267,7 @@ questions_2 = [ """Tanya is older than Eric.
                  If the first two statements are true, the third statement is """,
              """ If 12$34 = 10, 2$9 = 11 then what is the value of 6$27 = ?""",
              """If in a certain code, RAIN is written as 81#4 and CLOUD is written as 92#6, how will WIND be written?""",
-                "2, 6, 7, 21, 22, ?",
-                "1, 1, 2, 3, 5, 8, ?",
-                 "3, 9, 27, 81, ?",
-                 "4, 6, 9, 13, 18, ?",
-                "If CAT = 24, DOG = 26, then BAT = ?",
-                  "Find missing: 2, 10, 12, 60, 62, ?",
-                "What comes next: Z, X, U, Q, ?",
-                "If 5x = 20, then x = ?",
-                 "A number doubled is 50. What is the number?",
-                 "If 12 + 15 = 33, 13 + 16 = 35, then 14 + 17 = ?",
-                "Which number is odd one out?",
-               "Which word is different?",
-                  "If all Bloops are Razzies and all Razzies are Lazzies, then all Bloops are?"
+               
                 ]
 
 options_list_2 = [
@@ -390,7 +381,7 @@ def time_up_2():
     document.getElementById("next_2").style.display = "block"
 
 def next_q_2(e=None):
-    global current_2, answered_2,score_2
+    global current_2, answered_2,score_2,games_completed
 
     clearInterval(timer_id_2)
     answered_2 = False
@@ -404,10 +395,22 @@ def next_q_2(e=None):
         document.getElementById("question_2").innerText = "Quiz Finished 🎉"
         document.getElementById("options_2").style.display = "none"
         document.getElementById("next_2").style.display = "none"
-        document.getElementById("timer_2").innerText = ""
+        document.getElementById("timer_2").style.display = "none"
         document.getElementById("msg_2").innerText = f"Your Final Score: {score_2} / {len(questions_2)}"
-        document.getElementById("brand_2").innerText = "Presented by SyrX"
-        document.getElementById("ad_2").innerText = "Co-Founders- Saketh & Yashwanth"
+        if(games_completed >= 0):
+            games_completed=games_completed+1
+            if(games_completed==2):
+                  document.getElementById("games_completed").innerText = "View your IQ score"
+                  document.getElementById("games_completed").disabled = False
+                  document.getElementById("games_completed").style.opacity = "1"
+            else:
+                   document.getElementById("games_completed").innerText = str(int(2-games_completed))+" more to go !"
+                   document.getElementById("games_completed").disabled = True
+                   document.getElementById("games_completed").style.opacity = "0.5"
+        document.getElementById("tick-missing").style.display = "inline"
+        document.getElementById("play-missing").disabled = True
+        document.getElementById("play-missing").style.opacity = "0.5"       
+        
 
 
 def start_game_2(e=None):
@@ -432,3 +435,4 @@ def display_game_2(e):
 def scoreboard_2():
     score = document.getElementById("score_2").value
     document.getElementById("scoreboard_2").innerText = f"Your Score: {score_2}/{len(questions_2)}"
+

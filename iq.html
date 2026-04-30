@@ -67,10 +67,12 @@
                 score.
             </p>
             <div class="d-flex flex-row justify-content-center align-items-center flex-wrap">
-                <div class="games col-sm-12 col-12 col-md-6 col-lg-3 ">
-                    <img src="https://img.freepik.com/premium-vector/repetition-number-twenty-forming-logo-design-showcasing-numerical-pattern-poster-that-captures-essence-our-open-positions_585735-34266.jpg"
-                        alt="number-series" class="game-image" />
-                    <span id="tick-reasoning" class="tick" style="display:none;">✔️</span>
+                <div class="games col-sm-12 col-12 col-md-6 col-lg-3  position-relative">
+                    <div class="d-flex flex-row ">
+                        <img src="https://img.freepik.com/premium-vector/repetition-number-twenty-forming-logo-design-showcasing-numerical-pattern-poster-that-captures-essence-our-open-positions_585735-34266.jpg"
+                            alt="number-series" class="game-image" />
+                        <span id="tick-reasoning" class="tick-mark " style="display:none;">✓</span>
+                    </div>
                     <br>
                     <h2 class="game-heading ">Logical Reasoning</h2>
                     <p class="game-para ">Time to use your BRAIN..</p>
@@ -80,6 +82,7 @@
                 <div class="games col-sm-12 col-12 col-md-6 col-lg-3 ">
                     <img src="https://cdn.iconscout.com/icon/premium/png-256-thumb/missing-number-sticker-icon-svg-download-png-4416041.png"
                         alt="number-series" class="game-image" />
+                    <span id="tick-missing" class="tick-mark " style="display:none;">✓</span>    
                     <br>
                     <h2 class="game-heading ">Missing Number</h2>
                     <p class="game-para ">Find the missing piece</p>
@@ -96,7 +99,7 @@
                     <button class="animated-button">Play</button>
                 </div>
             </div>
-
+            <button id="games_completed" class="button-completed">complete 3 games to go..</button>
         </div>
     </div>
 
@@ -111,7 +114,7 @@
                     <h3 id="timer" class="timer ml-auto "></h3>
                 </div>
                 <h1 class="question" id="question"></h1>
-                <div id="options" >
+                <div id="options">
                     <button class=" opt">1</button>
                     <button class="opt">2</button>
                     <button class="opt">3</button>
@@ -139,7 +142,7 @@
                     <h3 id="timer_2" class="timer ml-auto "></h3>
                 </div>
                 <h1 class="question" id="question_2"></h1>
-                <div id="options_2" >
+                <div id="options_2">
                     <button class=" opt_2">1</button>
                     <button class="opt_2">2</button>
                     <button class="opt_2">3</button>
@@ -159,9 +162,9 @@
 
 
 
-     <script type="text/javascript"
+    <script type="text/javascript"
         src="https://new-assets.ccbp.in/frontend/content/static-ccbp-ui-kit/static-ccbp-ui-kit.js">
-    </script>
+        </script>
     <py-config>
         [[fetch]]
         files = ["iq.py"]
