@@ -82,7 +82,7 @@
                 <div class="games col-sm-12 col-12 col-md-6 col-lg-3 ">
                     <img src="https://cdn.iconscout.com/icon/premium/png-256-thumb/missing-number-sticker-icon-svg-download-png-4416041.png"
                         alt="number-series" class="game-image" />
-                    <span id="tick-missing" class="tick-mark " style="display:none;">✓</span>    
+                    <span id="tick-missing" class="tick-mark " style="display:none;">✓</span>
                     <br>
                     <h2 class="game-heading ">Missing Number</h2>
                     <p class="game-para ">Find the missing piece</p>
@@ -123,7 +123,7 @@
                 <h3 id="msg" class="msg"></h3>
                 <p id="brand" class="text-center"></p>
                 <p id="ad" class="text-center"></p>
-                <p id="fast-answers"  class="text-center"></p>
+                <p id="fast-answers" class="text-center"></p>
                 <p id="medium-answers" class="text-center"></p>
 
                 <div class="d-flex flex-row justify-content-center">
@@ -176,6 +176,21 @@
     <py-script>
         from iq import *
     </py-script>
+    </script>
+    <script>
+        var correctSound = new Audio("https://res.cloudinary.com/deos25cvk/video/upload/v1779710322/mixkit-correct-answer-reward-952_np6xcc.wav");
+        var wrongSound = new Audio("https://res.cloudinary.com/deos25cvk/video/upload/v1779710365/mixkit-player-losing-or-failing-2042_ux0yuh.wav");
+
+        function playCorrect() {
+            correctSound.currentTime = 0;
+            correctSound.play();
+        }
+
+        function playWrong() {
+            wrongSound.currentTime = 0;
+            wrongSound.play();
+        }
+    </script>
 </body>
 
 </html>

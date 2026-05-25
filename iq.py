@@ -1,4 +1,4 @@
-from js import document, setInterval, clearInterval
+from js import document, setInterval, clearInterval,window
 from pyodide.ffi import create_proxy
 import random
 
@@ -224,6 +224,7 @@ def choose_option(e):
             opts[i].style.color = "white"
 
     if user_choice == correct:
+        window.playCorrect() 
         if time_left >= 10:
             score += 5
             fast_answers += 1
@@ -233,7 +234,8 @@ def choose_option(e):
         else:
             score += 1
             slow_answers += 1
-
+    else:
+     window.playWrong()
     document.getElementById("score-card").innerText = f"Score: {score}"
     document.getElementById("next").style.display = "block"
 
@@ -422,6 +424,7 @@ def choose_option_2(e):
             opts_2[i].style.color = "white"
 
     if user_choice_2 == correct_2:
+        window.playCorrect() 
         if time_left_2 >= 10:
             score_2 += 5
             fast_answers_2 += 1
@@ -431,6 +434,8 @@ def choose_option_2(e):
         else:
             score_2 += 1
             slow_answers_2 += 1
+    else:
+     window.playWrong()        
 
     document.getElementById("score-card_2").innerText = f"Score: {score_2}"
     document.getElementById("next_2").style.display = "block"
