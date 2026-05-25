@@ -2,17 +2,17 @@ from js import document, setInterval, clearInterval
 from pyodide.ffi import create_proxy
 
 def username(e):
-    # 1. Get the inputs and values
+  
     name_input = document.getElementById("name")
     age_input = document.getElementById("age")
     name = name_input.value.strip()
     age = age_input.value.strip()
-     # 2. Helper function to show/remove errors
+   
     def handle_error(input_element, error_id, message):
         existing_error = document.getElementById(error_id)
         if not input_element.value.strip():
             if not existing_error:
-                # Create a new error paragraph
+               
                 err = document.createElement("p")
                 err.id = error_id
                 err.innerText = message
@@ -30,16 +30,23 @@ def username(e):
         else:
             if existing_error:
                 existing_error.remove()
-            return True # Validation passed
+            return True 
 
-    # 3. Run validation for both fields
     name_valid = handle_error(name_input, "name-err", "⚠️ Please enter your name")
     age_valid = handle_error(age_input, "age-err", "⚠️ Please enter your age")
+   
 
     if name_valid and age_valid:
-        document.getElementById("display-username").innerText = f" {name}".upper()
-        document.getElementById("sectionlogin").style.display = "none"
-        document.getElementById("sectiontest").style.display = "block"
+         document.getElementById("display-username").innerText = f" {name}".upper()
+         document.getElementById("sectionlogin").style.display = "none"
+         document.getElementById("sectiontest").style.display = "block"
+         document.getElementById("games_completed").disabled = True
+         document.getElementById("games_completed").style.opacity = "0.5"
+  
+       
+
+    
+        
 
 
 btn = document.getElementById("btn")
@@ -117,6 +124,8 @@ time_left = 15
 timer_id = None
 score=0
 games_completed=0
+fast_answers=0
+medium_answers=0
 
 def start_timer():
     global timer_id, time_left, answered
@@ -158,7 +167,7 @@ def show_question():
 
     start_timer()
 def choose_option(e):
-    global answered, score
+    global answered, score,fast_answers, medium_answers 
 
     if answered:
         return
@@ -168,23 +177,25 @@ def choose_option(e):
 
     user_choice = e.target.innerText
     correct = answers[current]
-
     opts = document.getElementsByClassName("opt")
-
     for i in range(len(opts)):
         option_text = opts[i].innerText
-
         if option_text == correct:
-            # ✅ correct answer → always green
             opts[i].style.backgroundColor = "#3ADD19"
             opts[i].style.color = "white"
-
         elif option_text == user_choice:
-            # ❌ wrong selected → red
             opts[i].style.backgroundColor = "#d2230f"
             opts[i].style.color = "white"
+    
     if user_choice == correct:
-         score += 1
+       if time_left >= 10:
+        score += 5
+        fast_answers += 1
+       elif time_left >= 5:
+        score += 3
+        medium_answers += 1
+       else:
+        score += 1
     document.getElementById("score-card").innerText = f"Score: {score}"
     document.getElementById("next").style.display = "block"
 def time_up():
@@ -217,7 +228,9 @@ def next_q(e=None):
         document.getElementById("options").style.display = "none"
         document.getElementById("next").style.display = "none"
         document.getElementById("timer").style.display = "none"
-        document.getElementById("msg").innerText = f"Your Final Score: {score} / {len(questions)}"
+        document.getElementById("msg").innerText = f"Your Final Score: {score}"
+        document.getElementById("fast-answers").innerText = f"Within 5 sec: {fast_answers}"
+        document.getElementById("medium-answers").innerText = f"Within 10 sec: {medium_answers}"
        
         if(games_completed >= 0):
             games_completed=games_completed+1
@@ -354,12 +367,12 @@ def choose_option_2(e):
         option_text_2 = opts_2[i].innerText
 
         if option_text_2 == correct_2:
-            # ✅ correct answer → always green
+         
             opts_2[i].style.backgroundColor = "#3ADD19"
             opts_2[i].style.color = "white"
 
         elif option_text_2 == user_choice_2:
-            # ❌ wrong selected → red
+          
             opts_2[i].style.backgroundColor = "#d2230f"
             opts_2[i].style.color = "white"
     if user_choice_2 == correct_2:
