@@ -20,10 +20,38 @@
     <link rel="stylesheet" href="https://pyscript.net/releases/2026.3.1/core.css" />
     <script type="module" src="https://pyscript.net/releases/2026.3.1/core.js"></script>
 
-    <title>IQTEST</title>
+    <title>MIND ARENA</title>
 </head>
 
 <body>
+    <div id="loader" style="display:none;">
+        <div class="loader-overlay">
+            <div class="loader-popup">
+                <p class="loader-please-wait">Please Wait...</p>
+                <p class="loader-message" id="loader-message">We are verifying your details...</p>
+                <div class="loader-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="loader-divider"></div>
+                <p class="loader-powered">POWERED BY SYRX</p>
+            </div>
+        </div>
+    </div>
+    <div id="loader-game" style="display:none;">
+        <div class="loader-overlay">
+            <div class="loader-popup">
+                <p class="loader-please-wait">Ready to Play?</p>
+
+                <div class="loader-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </div>
     <div id="sectionlogin" class="col-12 p-0">
         <div class=" background-login d-flex flex-column align-items-center justify-content-center ">
             <div class="login-card ">
@@ -110,8 +138,13 @@
             <div class="card-reasoning">
                 <div class="d-flex flex-row ">
                     <p id="exit" class="exit">EXIT</p>
+                    <p id="question-number" class="question-number"></p>
                     <p id="score-card" class="scoreboard ">score:0</p>
                     <h3 id="timer" class="timer ml-auto "></h3>
+                </div>
+
+                <div class="progress-bar-bg" id="progress-bar-bg">
+                    <div class="progress-bar-fill" id="progress-bar"></div>
                 </div>
                 <h1 class="question" id="question"></h1>
                 <div id="options">
@@ -189,6 +222,27 @@
         function playWrong() {
             wrongSound.currentTime = 0;
             wrongSound.play();
+        }
+        function showLoader(duration, callback) {
+            var loader = document.getElementById("loader");
+
+            loader.style.display = "flex";
+
+            setTimeout(function () {
+                loader.style.display = "none";
+                callback();
+            }, duration);
+
+        }
+        function showLoader_game(duration, callback) {
+            var loader_game = document.getElementById("loader-game");
+
+            loader_game.style.display = "flex";
+
+            setTimeout(function () {
+                loader_game.style.display = "none";
+                callback();
+            }, duration);
         }
     </script>
 </body>

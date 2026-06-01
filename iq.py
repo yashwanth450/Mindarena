@@ -55,25 +55,49 @@ def username(e):
         clear_error("age-err")
 
     if name_valid and age_valid:
+
+     def go():
+        global games_completed
+
+        games_completed = 0
+
         document.getElementById("display-username").innerText = f" {name}".upper()
+
         document.getElementById("sectionlogin").style.display = "none"
         document.getElementById("sectiontest").style.display = "block"
+
+        document.getElementById("games_completed").innerText = "2 more to go!"
         document.getElementById("games_completed").disabled = True
         document.getElementById("games_completed").style.opacity = "0.5"
 
+        document.getElementById("play").disabled = False
+        document.getElementById("play").style.opacity = "1"
+
+        document.getElementById("play-missing").disabled = False
+        document.getElementById("play-missing").style.opacity = "1"
+
+        document.getElementById("tick-reasoning").style.display = "none"
+        document.getElementById("tick-missing").style.display = "none"
+
+    window.showLoader(5000, create_proxy(go))
+
 btn = document.getElementById("btn")
 btn.addEventListener("click", create_proxy(username))
-
 def home(_):
     document.getElementById("sectiontest").style.display = "none"
     document.getElementById("sectionlogin").style.display = "block"
+
 back = document.getElementById("back")
 back.addEventListener("click", create_proxy(home))
-
 def display_reasoning(e):
-    document.getElementById("sectiontest").style.display = "none"
-    document.getElementById("sectionReasoning").style.display = "block"
-    start_game()
+
+    def go():
+        document.getElementById("sectiontest").style.display = "none"
+        document.getElementById("sectionReasoning").style.display = "block"
+        start_game()
+
+    window.showLoader_game(3000, create_proxy(go))  
+
 play = document.getElementById("play")
 play.addEventListener("click", create_proxy(display_reasoning))
 
@@ -163,6 +187,7 @@ medium_answers = 0
 slow_answers = 0
 
 
+
 def start_timer():
     global timer_id, time_left, answered
     clearInterval(timer_id)
@@ -170,7 +195,7 @@ def start_timer():
 
     def tick():
         global time_left, timer_id
-        document.getElementById("timer").innerText = f"Time: {time_left}"
+        document.getElementById("timer").innerText = f"Time:{time_left}"
         time_left -= 1
         if time_left < 0:
             clearInterval(timer_id)
@@ -183,8 +208,9 @@ def start_timer():
 
 
 def show_question():
-    global answered
+    global answered,question_number
     answered = False
+    
 
     current_q = selected_questions[current]
 
@@ -200,11 +226,14 @@ def show_question():
         opts[i].style.color = ""
 
     start_timer()
-
+    document.getElementById("question-number").innerText = f"{current + 1} of {len(selected_questions)}"
+    progress = (current) / 5 * 100
+    document.getElementById("progress-bar").style.width = f"{progress}%"
 
 def choose_option(e):
     global answered, score, fast_answers, medium_answers, slow_answers
-
+    
+        
     if answered:
         return
 
@@ -216,6 +245,7 @@ def choose_option(e):
     opts = document.getElementsByClassName("opt")
     for i in range(len(opts)):
         option_text = opts[i].innerText
+
         if option_text == correct:
             opts[i].style.backgroundColor = "#3ADD19"
             opts[i].style.color = "white"
@@ -236,6 +266,8 @@ def choose_option(e):
             slow_answers += 1
     else:
      window.playWrong()
+
+
     document.getElementById("score-card").innerText = f"Score: {score}"
     document.getElementById("next").style.display = "block"
 
@@ -245,6 +277,7 @@ def next_q(e=None):
     clearInterval(timer_id)
     answered = False
     current += 1
+    
 
     if current < 5:  
         show_question()
@@ -254,8 +287,8 @@ def next_q(e=None):
         document.getElementById("next").style.display = "none"
         document.getElementById("timer").style.display = "none"
         document.getElementById("msg").innerText = f"Your Final Score: {score}"
-        document.getElementById("fast-answers").innerText = f"⚡ Within 5 sec: {fast_answers}"
-        document.getElementById("medium-answers").innerText = f"🕐 Within 10 sec: {medium_answers}"
+        document.getElementById("progress-bar").style.display = "none"
+        document.getElementById("progress-bar-bg").style.display = "none"
 
         games_completed += 1
         if games_completed == 2:
@@ -293,6 +326,7 @@ def start_game(e=None):
 opts = document.getElementsByClassName("opt")
 for i in range(len(opts)):
     opts[i].addEventListener("click", create_proxy(choose_option))
+    
 
 document.getElementById("next").addEventListener("click", create_proxy(next_q))
 
@@ -455,7 +489,7 @@ def next_q_2(e=None):
         document.getElementById("next_2").style.display = "none"
         document.getElementById("timer_2").style.display = "none"
         document.getElementById("msg_2").innerText = f"Your Final Score: {score_2}"
-
+        
         games_completed += 1
         if games_completed == 2:
             document.getElementById("games_completed").innerText = "View your IQ score"
