@@ -79,7 +79,7 @@ def username(e):
         document.getElementById("tick-reasoning").style.display = "none"
         document.getElementById("tick-missing").style.display = "none"
 
-    window.showLoader(5000, create_proxy(go))
+     window.showLoader(5000, create_proxy(go))
 
 btn = document.getElementById("btn")
 btn.addEventListener("click", create_proxy(username))
@@ -119,6 +119,11 @@ def games_missing(_):
     document.getElementById("sectiontest").style.display = "block"
 exit2 = document.getElementById("exit_2")
 exit2.addEventListener("click", create_proxy(games_missing))
+def section_scoreboard(_):
+    document.getElementById("sectiontest").style.display = "none"
+    document.getElementById("sectionscoreboard").style.display = "block"
+view = document.getElementById("games_completed")
+view.addEventListener("click", create_proxy(section_scoreboard))
 
 
 question_pool = [
