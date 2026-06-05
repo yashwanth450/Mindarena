@@ -120,8 +120,8 @@ background: linear-gradient(to right, #516395, #614385);
   min-height: 100vh;
   padding:20 px;
   width: 100vw;
+  background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
 
-background-image:linear-gradient(to top, #505285 0%, #585e92 12%, #65689f 25%, #7474b0 37%, #7e7ebb 50%, #8389c7 62%, #9795d4 75%, #a2a1dc 87%, #b5aee4 100%); 
 }
 body {
     margin: 0;
@@ -165,7 +165,8 @@ body {
   padding: 12px;
   border: none;
   border-radius: 10px;
-  color: black;
+  background: #00E5FF;
+  color: #111;
   font-size: 16px;
   cursor: pointer;
   transition: 0.3s ease;
@@ -738,7 +739,39 @@ min-height: 100vh;
   
 }
 
+.back-score{
+    background-color: black;
+    height:300px;
+    width:250px;
+    border-radius:10px;
+    text-align:center;
+    
+}
+.bg-scorecard{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #0f172a, #1e293b, #334155);
+    height:100vh;
+}
+.back-rank{
+    height:200px;
+    width:180px;
+    background-color: gold;
+    color:black;
+    border-radius:5px;
+    margin-top:200px;
+    box-shadow: 0 10px 30px rgba(0, 229, 246, 0.1);
+}
 
+.back-badge{
+    height:200px;
+    width:180px;
+    background-color:silver;
+    color:black;
+    border-radius:5px;
+    margin-top:200px;
+}
 
 
 
