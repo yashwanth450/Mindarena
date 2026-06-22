@@ -772,8 +772,117 @@ min-height: 100vh;
     border-radius:5px;
     margin-top:200px;
 }
+.scoreboard_display{
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    margin-top: 20px;
+}
 
+.pattern-instruction {
+    color: #888;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-align: center;
+    margin: 10px 0 14px;
+    text-transform: uppercase;
+}
 
+.pattern-grid {
+    border-collapse: separate;
+    border-spacing: 6px;
+    margin: 0 auto 16px;
+}
+.pattern-grid td {
+    width: 60px;
+    height: 60px;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 10px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 22px;
+    font-weight: 700;
+    color: white;
+}
+.pattern-grid td.missing {
+    background: #1a1500;
+    border: 2px dashed #ffd700;
+    color: #ffd700;
+    font-size: 26px;
+}
+
+.shape-row {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+.shape-box {
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.shape-box.missing {
+    background: #1a1500;
+    border: 2px dashed #ffd700;
+}
+.shape-arrow {
+    color: #444;
+    font-size: 18px;
+}
+
+.color-row {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+.color-circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.1);
+}
+.color-circle.missing {
+    background: transparent !important;
+    border: 2px dashed #ffd700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffd700;
+    font-size: 22px;
+    font-weight: 700;
+}
+.opt {
+    width: 100%;
+    margin: 6px 0;
+    padding: 11px 14px;
+    border-radius: 8px;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    color: #ddd;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.opt:hover {
+    background: #222;
+    border-color: #ffd700;
+    color: #ffd700;
+}
 
 
 
