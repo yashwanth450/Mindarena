@@ -18,7 +18,7 @@
     z-index: 9999;
 }
 
-/* Glassmorphism popup */
+
 .loader-popup {
     background: rgba(255, 255, 255, 0.08);
     backdrop-filter: blur(16px);
@@ -52,7 +52,6 @@
     line-height: 1.6;
 }
 
-/* Bouncing dots */
 .loader-dots {
     display: flex;
     gap: 8px;
@@ -137,6 +136,115 @@ body {
   padding: 20px;
   
 }
+
+
+.sectionmain_page{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.container_main{
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+}
+.logo_main{
+    font-size:70px;
+    font-weight:800;
+    margin-bottom:10px;
+
+    background:linear-gradient(
+    90deg,
+    #00e5ff,
+    #ffffff,
+    #00e5ff);
+
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+
+    text-shadow:
+    0 0 20px rgba(0,229,255,.4);
+}
+
+.tagline_main{
+    color:#b8c7ff;
+    margin-bottom:40px;
+    font-size:18px;
+}
+
+.card_main{
+    width:420px;
+
+    padding:40px;
+
+    border-radius:30px;
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(18px);
+
+    border:1px solid rgba(255,255,255,.15);
+
+    box-shadow:
+    0 15px 40px rgba(0,0,0,.4);
+}
+
+.btn_main{
+    width:100%;
+    padding:18px;
+
+    border:none;
+    border-radius:15px;
+
+    font-size:18px;
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    margin-bottom:18px;
+}
+
+.create-btn{
+    background:#00d4ff;
+    color:#06132a;
+}
+
+.create-btn:hover{
+    
+     background:transparent;
+    color:#00d4ff;
+    border:2px solid #00d4ff;
+    color:white;
+}
+
+.login-btn{
+    background:transparent;
+    color:white;
+    border:2px solid #00d4ff;
+}
+
+.login-btn:hover{
+    background:#00d4ff;
+    color:#06132a;
+}
+
+.footer{
+    margin-top:35px;
+    color:#8fa5d6;
+    font-size:13px;
+}
+
+.footer span{
+    color:#00d4ff;
+    font-weight:700;
+}
 .login-head{
   font-size:24px;
   font-weight: bold;
@@ -144,6 +252,7 @@ body {
 }
 
 .login-card {
+
   width: 100%;
   max-width: 380px;
  background:rgba(255, 255, 255, 0.1);
@@ -152,7 +261,7 @@ body {
   border-radius: 38px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 5px;
   padding-bottom: 0%;
    box-shadow:0 30px 70px rgba(0,0,0,.35);
   animation:slideUp .8s ease;
@@ -189,14 +298,14 @@ input {
 }
 .main-heading{
   color:white;
-  font-size: 44px;
+  font-size: 30px;
   font-weight: bold;
   text-align: center;
   font-family: open sans;
 }
 .para{
   color:white;
-  font-size: 18px;
+  font-size: 15px;
   font-family:open sans;
   font-weight: 200;
   

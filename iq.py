@@ -1,100 +1,76 @@
+
+from unittest import result
+
 from js import document, setInterval, clearInterval,window
 from pyodide.ffi import create_proxy
 import random
+from pyodide.ffi import create_proxy
+import asyncio
 
-def username(e):
-    global username_input, age_input_value
-    name_input = document.getElementById("name")
-    age_input = document.getElementById("age")
-    name = name_input.value.strip()
-    age = age_input.value.strip()
-   
-    def handle_error(input_element, error_id, message):
-        existing_error = document.getElementById(error_id)
-        if existing_error:
-            existing_error.remove()
-        err = document.createElement("p")
-        err.id = error_id
-        err.innerText = message
-        err.style.color = "#eb0a0a"
-        err.style.fontSize = "15px"
-        err.style.marginTop = "5px"
-        err.style.backgroundColor = "white"
-        err.style.padding = "5px"
-        err.style.borderRadius = "5px"
-        input_element.parentNode.insertBefore(err, input_element.nextSibling)
+def register(e):
+    name = document.getElementById("reg-name").value.strip()
+    age = document.getElementById("reg-age").value.strip()
+    password = document.getElementById("reg-password").value.strip()
 
-    def clear_error(error_id):
-        existing_error = document.getElementById(error_id)
-        if existing_error:
-            existing_error.remove()
+    def show_err(msg):
+        document.getElementById("reg-error").innerText = msg
 
-    name_valid = True
     if not name:
-        handle_error(name_input, "name-err", "⚠️ Please enter your name")
-        name_valid = False
-    elif not name.replace(" ", "").isalpha():
-        handle_error(name_input, "name-err", "⚠️ Name should have alphabets only!")
-        name_valid = False
-    elif len(name) < 4:
-        handle_error(name_input, "name-err", "⚠️ Name should be at least 4 characters long!")
-        name_valid = False
-    else:
-        clear_error("name-err")
+        show_err("⚠️ Please enter your name")
+        return
 
-    age_valid = True
-    if not age:
-        handle_error(age_input, "age-err", "⚠️ Please enter your age")
-        age_valid = False
-    elif not age.isdigit():
-        handle_error(age_input, "age-err", "⚠️ Age should be a number only! Example: 17")
-        age_valid = False
-    elif not (10 <= int(age) <= 30):
-        handle_error(age_input, "age-err", "⚠️ Age should be between 10 and 30 years!")
-        age_valid = False
-    else:
-        clear_error("age-err")
+    global username_input, age_input_value
+    username_input = name.upper()
+    age_input_value = age
 
-    if name_valid and age_valid:
+    def go():
+        global games_completed
+        games_completed = 0
 
-         username_input = name.upper()
-         age_input_value = age.upper()
-         window.saveUser(username_input, age_input_value)
-       
-         
-         def go():
-          global games_completed
+        document.getElementById("display-username").innerText = username_input
+        document.getElementById("section_new_profile").style.display = "none"
+        document.getElementById("sectiontest").style.display = "block"
+        document.getElementById("games_completed").disabled = True
+        document.getElementById("games_completed").style.opacity = "0.4"
 
-          games_completed = 0
+    async def check_and_register():
 
-          document.getElementById("display-username").innerText = f" {username_input}"
+        result = await window.registerUser(
+            username_input,
+            age_input_value,
+            password
+        )
 
-          document.getElementById("sectionlogin").style.display = "none"
-          document.getElementById("sectiontest").style.display = "block"
+        if not result.success:
+            show_err(result.message)
+            return
 
-          document.getElementById("games_completed").innerText = "2 more to go!"
-          document.getElementById("games_completed").disabled = True
-          document.getElementById("games_completed").style.opacity = "0.5"
+        show_err("")
 
-          document.getElementById("play").disabled = False
-          document.getElementById("play").style.opacity = "1"
+        window.showLoader(
+    2000,
+    "Creating your account...",
+    create_proxy(go)
+)
 
-          document.getElementById("play-missing").disabled = False
-          document.getElementById("play-missing").style.opacity = "1"
+    asyncio.create_task(check_and_register())
 
-          document.getElementById("tick-reasoning").style.display = "none"
-          document.getElementById("tick-missing").style.display = "none"
-         window.showLoader(5000, create_proxy(go))
+btn = document.getElementById("btn-register")
+btn.addEventListener("click", create_proxy(register))
+def main_page_create_new_profile(_):
+    document.getElementById("sectionmain_page").style.display = "none"
+    document.getElementById("section_new_profile").style.display = "block"
 
+btn = document.getElementById("create_new_profile")
+btn.addEventListener("click", create_proxy(main_page_create_new_profile))
 
-btn = document.getElementById("btn")
-btn.addEventListener("click", create_proxy(username))
-def home(_):
-    document.getElementById("sectiontest").style.display = "none"
-    document.getElementById("sectionlogin").style.display = "block"
+def main_page_login(_):
+    document.getElementById("sectionmain_page").style.display = "none"
+    document.getElementById("section_login").style.display = "block"
 
-back = document.getElementById("back")
-back.addEventListener("click", create_proxy(home))
+btn = document.getElementById("login_button")
+btn.addEventListener("click", create_proxy(main_page_login))
+
 def display_reasoning(e):
 
     def go():

@@ -22,6 +22,7 @@
 
 
 
+
     <title>MIND ARENA</title>
 </head>
 
@@ -30,7 +31,7 @@
         <div class="loader-overlay">
             <div class="loader-popup">
                 <p class="loader-please-wait">Please Wait...</p>
-                <p class="loader-message" id="loader-message">We are verifying your details...</p>
+                <p class="loader-message" id="loader-message">Creating your account...</p>
                 <div class="loader-dots">
                     <span></span>
                     <span></span>
@@ -54,84 +55,118 @@
             </div>
         </div>
     </div>
-    <div id="sectionlogin" class="col-12 p-0">
-        <div class=" background-login d-flex flex-column align-items-center justify-content-center ">
-            <div class="login-card ">
-                <h1 class="main-heading">Mind Arena</h1>
-                <p class="para text-center">Check your IQ Levels</p>
-                <label class="para">Name :</label>
-                <input type="text" id="name" placeholder="Enter your name" required />
-
-                <label class="para">Age :</label>
-                <input type="text" id="age" placeholder="Age(in years)" required />
-                <button type="button" id="btn" class="card-button">Enter</button>
-                <p class="ad text-center">Presented by SyrX</p>
-
-            </div>
+   <!-- MAIN PAGE -->
+<div id="sectionmain_page" class="sectionmain_page">
+    <div class="container_main d-flex flex-column align-items-center flex-wrap justify-content-center">
+        <h1 class="logo_main">MindArena</h1>
+        <p class="tagline_main">Train. Compete. Improve.</p>
+        <div class="card_main">
+            <button id="create_new_profile" class="btn_main create-btn">🚀 Create New Profile</button>
+            <p class="text-center" style="color:#6c757d;">OR</p>
+            <button id="login_button" class="btn_main login-btn">🔑 Already Have an Account</button>
+        </div>
+        <p class="footer">Presented by <span>SyrX</span></p>
+    </div>
+</div>
+<div id="section_new_profile" class="col-12 p-0" style="display:none;">
+    <div class="background-login d-flex flex-column align-items-center justify-content-center">
+        <div class="login-card">
+            <h1 class="main-heading">Create New Profile</h1>
+            <p class="para text-center">Please fill in the details below:</p>
+            <label class="para">Name:</label>
+            <input type="text" id="reg-name" placeholder="Enter your name"/>
+            <label class="para">Age:</label>
+            <input type="text" id="reg-age" placeholder="Age (in years)"/>
+            <label class="para">Password:</label>
+            <input type="password" id="reg-password" placeholder="Min 6 characters"/>
+            <p id="reg-error" style="color:#ff4444; font-size:13px; text-align:center;"></p>
+            <button type="button" id="btn-register" class="card-button">Create Account →</button>
+            <p class="ad text-center">Presented by SyrX</p>
         </div>
     </div>
+</div>
+<div id="section_login" class="col-12 p-0" style="display:none;">
+    <div class="background-login d-flex flex-column align-items-center justify-content-center">
+        <div class="login-card">
+            <h1 class="main-heading">Login</h1>
+            <p class="para text-center">Please enter your details:</p>
+            <label class="para">Name:</label>
+            <input type="text" id="login-name" placeholder="Enter your name"/>
+            <label class="para">Password:</label>
+            <input type="password" id="login-password" placeholder="Enter your password"/>
+            <p id="login-error" style="color:#ff4444; font-size:16px; text-align:center;"></p>
+            <button type="button" id="btn-login" class="card-button">Login →</button>
+            <p class="ad text-center">Presented by SyrX</p>
+        </div>
+    </div>
+</div>
     <div id="sectiontest" class="col-12 col-xl-12 p-0" style="display:none;">
-        <div class=" background d-flex flex-column  align-items-center ">
-            <div class="styled-wrapper mr-auto" id="back">
-                <button class="button">
-                    <div class="button-box">
-                        <span class="button-elem">
-                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="arrow-icon">
-                                <path fill="black" d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z">
-                                </path>
-                            </svg>
-                        </span>
-                        <span class="button-elem">
-                            <svg fill="black" viewBox="0 0  24 24" xmlns="http://www.w3.org/2000/svg"
-                                class="arrow-icon">
-                                <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path>
-                            </svg>
-                        </span>
+        <div class=" background ">
+            <div class="d-flex flex-row justify-content-end align-items-end flex-wrap  p-4">
+                <ul class="nav   justify-content-end">
+                    <li class="nav-item">
+                        <a class="nav-link active " style="color:white;" aria-current="page" href="#">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" style="color:white;" href="#">Leaderboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+
+                </ul>
+            </div>
+            <div class="d-flex flex-column justify-content-center flex-item-center flex-wrap">
+
+                <p class="tag text-center mt-5 ">Complete this <span class="tag-highlighter">3 games</span> to unlock your IQ
+                    score.
+                </p>
+                <div class="d-flex flex-row justify-content-center align-items-center flex-wrap p-4">
+                    <div class="games col-sm-12 col-12 col-md-6 col-lg-3  col-xl-3 position-relative">
+                        <div class="d-flex flex-row ">
+                            <img src="https://img.freepik.com/premium-vector/repetition-number-twenty-forming-logo-design-showcasing-numerical-pattern-poster-that-captures-essence-our-open-positions_585735-34266.jpg"
+                                alt="number-series" class="game-image" />
+                            <span id="tick-reasoning" class="tick-mark " style="display:none;">✓</span>
+                        </div>
+                        <br>
+                        <h2 class="game-heading ">Logical Reasoning</h2>
+                        <p class="game-para ">Time to use your BRAIN..</p>
+                        <br>
+                        <button class="animated-button" id="play">Play</button>
                     </div>
-                </button>
+                    <div class="games col-sm-12 col-12 col-md-6 col-lg-3  col-xl-3">
+                        <img src="https://cdn.iconscout.com/icon/premium/png-256-thumb/missing-number-sticker-icon-svg-download-png-4416041.png"
+                            alt="number-series" class="game-image" />
+                        <span id="tick-missing" class="tick-mark " style="display:none;">✓</span>
+                        <br>
+                        <h2 class="game-heading ">Missing Number</h2>
+                        <p class="game-para ">Find the missing piece</p>
+                        <br>
+                        <button class="animated-button" id="play-missing">Play</button>
+                    </div>
+                    <div class="games col-sm-12 col-12 col-md-6 col-lg-3 ">
+                        <img src="https://cdn-icons-png.flaticon.com/512/7880/7880465.png" alt="number-series"
+                            class="game-image" />
+                        <br>
+                        <h2 class="game-heading ">Word Scramble</h2>
+                        <p class="game-para ">Unscramble the hidden word</p>
+                        <br>
+                        <button class="animated-button">Play</button>
+                    </div>
+
+                </div>
+                <div class="d-flex flex-row justify-content-center align-items-center flex-wrap m-2">
+                    <button id="games_completed" class="button-completed ">complete 3 games to go..</button>
+                </div>
+
+
             </div>
 
-            <p class="welcome ">Welcome</p>
-            <h1 class="text-center user-heading" id="display-username"></h1>
-            <p class="tag text-center">Complete this <span class="tag-highlighter">3 games</span> to unlock your IQ
-                score.
-            </p>
-            <div class="d-flex flex-row justify-content-center align-items-center flex-wrap">
-                <div class="games col-sm-12 col-12 col-md-6 col-lg-3  col-xl-3 position-relative">
-                    <div class="d-flex flex-row ">
-                        <img src="https://img.freepik.com/premium-vector/repetition-number-twenty-forming-logo-design-showcasing-numerical-pattern-poster-that-captures-essence-our-open-positions_585735-34266.jpg"
-                            alt="number-series" class="game-image" />
-                        <span id="tick-reasoning" class="tick-mark " style="display:none;">✓</span>
-                    </div>
-                    <br>
-                    <h2 class="game-heading ">Logical Reasoning</h2>
-                    <p class="game-para ">Time to use your BRAIN..</p>
-                    <br>
-                    <button class="animated-button" id="play">Play</button>
-                </div>
-                <div class="games col-sm-12 col-12 col-md-6 col-lg-3  col-xl-3">
-                    <img src="https://cdn.iconscout.com/icon/premium/png-256-thumb/missing-number-sticker-icon-svg-download-png-4416041.png"
-                        alt="number-series" class="game-image" />
-                    <span id="tick-missing" class="tick-mark " style="display:none;">✓</span>
-                    <br>
-                    <h2 class="game-heading ">Missing Number</h2>
-                    <p class="game-para ">Find the missing piece</p>
-                    <br>
-                    <button class="animated-button" id="play-missing">Play</button>
-                </div>
-                <div class="games col-sm-12 col-12 col-md-6 col-lg-3 ">
-                    <img src="https://cdn-icons-png.flaticon.com/512/7880/7880465.png" alt="number-series"
-                        class="game-image" />
-                    <br>
-                    <h2 class="game-heading ">Word Scramble</h2>
-                    <p class="game-para ">Unscramble the hidden word</p>
-                    <br>
-                    <button class="animated-button">Play</button>
-                </div>
-            </div>
-            <button id="games_completed" class="button-completed">complete 3 games to go..</button>
         </div>
+
+
     </div>
+
 
     <div id="sectionReasoning" class="col-12 p-0" style="display:none;">
         <div class="back-reasoning d-flex flex-column justify-content-center align-items-center">
@@ -220,6 +255,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="iq.js"></script>
+
     <py-config>
         [[fetch]]
         files = ["iq.py"]

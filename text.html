@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="text.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://pyscript.net/releases/2026.3.1/core.css" />
+    <script type="module" src="https://pyscript.net/releases/2026.3.1/core.js"></script>
+
+
+    <!-- MAIN PAGE -->
+    <div id="sectionmain_page" class="sectionmain_page">
+        <div class="container_main d-flex flex-column align-items-center flex-wrap justify-content-center">
+            <h1 class="logo_main">MindArena</h1>
+            <p class="tagline_main">Train. Compete. Improve.</p>
+            <div class="card_main">
+                <button id="create_new_profile" class="btn_main create-btn">🚀 Create New Profile</button>
+                <p class="text-center" style="color:#6c757d;">OR</p>
+                <button id="login_button" class="btn_main login-btn">🔑 Already Have an Account</button>
+            </div>
+            <p class="footer">Presented by <span>SyrX</span></p>
+        </div>
+    </div>
+
+    <!-- REGISTER PAGE -->
+    <div id="section_new_profile" class="col-12 p-0" style="display:none;">
+        <div class="background-login d-flex flex-column align-items-center justify-content-center">
+            <div class="login-card">
+                <h1 class="main-heading">Create New Profile</h1>
+                <p class="para text-center">Please fill in the details below:</p>
+                <label class="para">Name:</label>
+                <input type="text" id="reg-name" placeholder="Enter your name" />
+                <label class="para">Age:</label>
+                <input type="text" id="reg-age" placeholder="Age (in years)" />
+                <label class="para">Password:</label>
+                <input type="password" id="reg-password" placeholder="Min 6 characters" />
+                <p id="reg-error" style="color:#ff4444; font-size:13px; text-align:center;"></p>
+                <button type="button" id="btn-register" class="card-button">Create Account →</button>
+                <p class="ad text-center">Presented by SyrX</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- LOGIN PAGE -->
+    <div id="section_login" class="col-12 p-0" style="display:none;">
+        <div class="background-login d-flex flex-column align-items-center justify-content-center">
+            <div class="login-card">
+                <h1 class="main-heading">Login</h1>
+                <p class="para text-center">Please enter your details:</p>
+                <label class="para">Name:</label>
+                <input type="text" id="login-name" placeholder="Enter your name" />
+                <label class="para">Password:</label>
+                <input type="password" id="login-password" placeholder="Enter your password" />
+                <p id="login-error" style="color:#ff4444; font-size:13px; text-align:center;"></p>
+                <button type="button" id="btn-login" class="card-button">Login →</button>
+                <p class="ad text-center">Presented by SyrX</p>
+            </div>
+        </div>
+    </div>
+    <div id="sectiontest" class="col-12 col-xl-12 p-0" style="display:none;">
+        <div class=" background ">
+            <div class="d-flex flex-row justify-content-end align-items-end flex-wrap  p-0">
+                <ul class="nav   justify-content-end">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Active</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+
+                </ul>
+            </div>
+
+
+            <p class="tag text-center ">Complete this <span class="tag-highlighter">3 games</span> to unlock your IQ
+                score.
+            </p>
+            <div class="d-flex flex-row justify-content-center align-items-center flex-wrap mt-5">
+                <div class="games col-sm-12 col-12 col-md-6 col-lg-3  col-xl-3 position-relative">
+                    <div class="d-flex flex-row ">
+                        <img src="https://img.freepik.com/premium-vector/repetition-number-twenty-forming-logo-design-showcasing-numerical-pattern-poster-that-captures-essence-our-open-positions_585735-34266.jpg"
+                            alt="number-series" class="game-image" />
+                        <span id="tick-reasoning" class="tick-mark " style="display:none;">✓</span>
+                    </div>
+                    <br>
+                    <h2 class="game-heading ">Logical Reasoning</h2>
+                    <p class="game-para ">Time to use your BRAIN..</p>
+                    <br>
+                    <button class="animated-button" id="play">Play</button>
+                </div>
+                <div class="games col-sm-12 col-12 col-md-6 col-lg-3  col-xl-3">
+                    <img src="https://cdn.iconscout.com/icon/premium/png-256-thumb/missing-number-sticker-icon-svg-download-png-4416041.png"
+                        alt="number-series" class="game-image" />
+                    <span id="tick-missing" class="tick-mark " style="display:none;">✓</span>
+                    <br>
+                    <h2 class="game-heading ">Missing Number</h2>
+                    <p class="game-para ">Find the missing piece</p>
+                    <br>
+                    <button class="animated-button" id="play-missing">Play</button>
+                </div>
+                <div class="games col-sm-12 col-12 col-md-6 col-lg-3 ">
+                    <img src="https://cdn-icons-png.flaticon.com/512/7880/7880465.png" alt="number-series"
+                        class="game-image" />
+                    <br>
+                    <h2 class="game-heading ">Word Scramble</h2>
+                    <p class="game-para ">Unscramble the hidden word</p>
+                    <br>
+                    <button class="animated-button">Play</button>
+                </div>
+
+            </div>
+            <div class="d-flex flex-row justify-content-center align-items-center flex-wrap m-5">
+                <button id="games_completed" class="button-completed ">complete 3 games to go..</button>
+            </div>
+
+
+
+
+        </div>
+
+
+    </div>
+
+
+    <div id="sectionReasoning" class="col-12 p-0" style="display:none;">
+        <div class="back-reasoning d-flex flex-column justify-content-center align-items-center">
+            <h1 class="head-reasoning">Pattern Matrix</h1>
+            <div class="card-reasoning">
+                <div class="d-flex flex-row align-items-center" style="margin-bottom:6px;">
+                    <p id="exit" class="exit mb-0">EXIT</p>
+                    <p id="question-number" class="question-number mb-0 mx-auto"></p>
+                    <p id="score-card" class="scoreboard mb-0">SCORE: 0</p>
+                    <h3 id="timer" class="timer mb-0 ml-3">15</h3>
+                </div>
+                <div class="progress-bar-bg" id="progress-bar-bg">
+                    <div class="progress-bar-fill" id="progress-bar"></div>
+                </div>
+
+                <p id="pattern-instruction" class="pattern-instruction">Find the missing pattern:</p>
+                <div id="pattern-display"></div>
+
+                <div id="options">
+                    <button class="opt">1</button>
+                    <button class="opt">2</button>
+                    <button class="opt">3</button>
+                    <button class="opt">4</button>
+                </div>
+                <h3 id="msg" class="msg"></h3>
+                <div class="d-flex flex-row justify-content-center">
+                    <button class="nxt" id="next" style="display:none;">NEXT →</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="sectionmissing" class="col-12 p-0" style="display:none;">
+        <div class="back-reasoning d-flex flex-column justify-content-center align-items-center">
+
+            <h1 class="head-reasoning">Missing Number</h1>
+            <div class="card-reasoning">
+                <div class="d-flex flex-row ">
+                    <p id="exit_2" class="exit">EXIT</p>
+                    <p id="score-card_2" class="scoreboard ">score:0</p>
+                    <h3 id="timer_2" class="timer ml-auto "></h3>
+                </div>
+                <h1 class="question" id="question_2"></h1>
+                <div id="options_2">
+                    <button class=" opt_2">1</button>
+                    <button class="opt_2">2</button>
+                    <button class="opt_2">3</button>
+                    <button class="opt_2">4</button>
+                </div>
+                <h3 id="msg_2" class="msg"></h3>
+                <p id="brand_2" class="text-center"></p>
+                <p id="ad_2" class="text-center"></p>
+                <div class="d-flex flex-row justify-content-center">
+                    <button class="nxt" id="next_2" style="display: none;">NEXT</button>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <div id="sectionscoreboard" class="col-12 bg-scorecard d-flex flex-row">
+        <div class="back-rank m-2 shadow">
+            <h1 class="text-center">RANK</h1>
+            <p id="result-rank" class="scoreboard_display"></p>
+        </div>
+        <div class="back-score shadow-lg">
+            <h1 class="text-white mt-3">SCORE</h1>
+            <p id="scoreboard_display" class="scoreboard_display"></p>
+        </div>
+        <div class="back-badge m-2 shadow d-flex flex-row">
+            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-award"
+                viewBox="0 0 16 16">
+                <path
+                    d="M9.669.864 8 0 6.331.864l-1.858.282-.842 1.68-1.337 1.32L2.6 6l-.306 1.854 1.337 1.32.842 1.68 1.858.282L8 12l1.669-.864 1.858-.282.842-1.68 1.337-1.32L13.4 6l.306-1.854-1.337-1.32-.842-1.68zm1.196 1.193.684 1.365 1.086 1.072L12.387 6l.248 1.506-1.086 1.072-.684 1.365-1.51.229L8 10.874l-1.355-.702-1.51-.229-.684-1.365-1.086-1.072L3.614 6l-.25-1.506 1.087-1.072.684-1.365 1.51-.229L8 1.126l1.356.702z" />
+                <path d="M4 11.794V16l4-1 4 1v-4.206l-2.018.306L8 13.126 6.018 12.1z" />
+            </svg>
+            <h1 class="text-center" style="font-size:32px;">BADGE</h1>
+            <p id="result-badge-icon" class="scoreboard_display"></p>
+            <p id="result-badge-name" class="scoreboard_display"></p>
+        </div>
+
+    </div>
+
+    <script type="text/javascript"
+        src="https://new-assets.ccbp.in/frontend/content/static-ccbp-ui-kit/static-ccbp-ui-kit.js">
+        </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src=".js"></script>
+
+    <py-config>
+        [[fetch]]
+        files = ["test.py"]
+    </py-config>
+
+    <py-script>
+        from test import *
+    </py-script>
+    </script>
+
+
+
+    </body>
+
+</html>
