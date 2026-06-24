@@ -164,6 +164,12 @@ def display_missing(e):
 document.getElementById("play-missing").addEventListener(
     "click", create_proxy(display_missing)
 )
+def back_to_main(_):
+    document.getElementById("section_profile").style.display = "none"
+    document.getElementById("sectiontest").style.display     = "block"  
+document.getElementById("back-to-main").addEventListener(
+    "click", create_proxy(back_to_main)
+)
 
 
 def games_reasoning(_):
