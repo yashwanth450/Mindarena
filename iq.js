@@ -24,7 +24,6 @@ const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-// ─── REGISTER ────────────────────────────────────────────────────────────────
 async function registerUser(name, age, password) {
     try {
         const { data, error: checkError } = await supabaseClient
@@ -57,7 +56,7 @@ async function registerUser(name, age, password) {
     }
 }
 
-// ─── LOGIN ────────────────────────────────────────────────────────────────────
+
 async function loginUser(name, password) {
     const { data, error } = await supabaseClient
         .from("users")
@@ -75,12 +74,10 @@ async function loginUser(name, password) {
     return { success: true, user: data };
 }
 
-// ─── UPDATE SCORE ─────────────────────────────────────────────────────────────
-// ─── UPDATE SCORE ─────────────────────────────────────────────────────────────
 async function updateScore(name, finalScore, fastAnswers, mediumAnswers, slowAnswers, totalGames,accuracy) {
     console.log("Updating scores for:", name);
 
-    // First, fetch the current user data to get existing scores
+
     const { data: userData, error: fetchError } = await supabaseClient
         .from("users")
         .select("total_score, fast_answers, medium_answers, slow_answers, total_games,accuracy, total_answers")
@@ -92,7 +89,6 @@ async function updateScore(name, finalScore, fastAnswers, mediumAnswers, slowAns
         return false;
     }
 
-    // Calculate cumulative scores (add new score to existing score)
     const newTotalScore = (userData.total_score || 0) + finalScore;
     const newFastAnswers = (userData.fast_answers || 0) + fastAnswers;
     const newMediumAnswers = (userData.medium_answers || 0) + mediumAnswers;
@@ -124,12 +120,6 @@ async function updateScore(name, finalScore, fastAnswers, mediumAnswers, slowAns
     console.log(`New total score: ${newTotalScore}, Overall Accuracy: ${overallAccuracy}%`);
     return true;
 }
-// ─── LEADERBOARD ──────────────────────────────────────────────────────────────
-// ============================================================
-// LEADERBOARD
-// ============================================================
-
-// ─── GET USER RANK ────────────────────────────────────────────────────────────
 async function getUserRank(name) {
     const { data, error } = await supabaseClient
         .from("users")
