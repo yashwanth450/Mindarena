@@ -105,10 +105,10 @@
             <div class="d-flex flex-row justify-content-end align-items-end flex-wrap  p-4">
                 <ul class="nav   justify-content-end">
                     <li class="nav-item">
-                        <a class="nav-link active " style="color:white;" aria-current="page" href="#">Profile</a>
+                        <a class="nav-link active " style="color:white;" aria-current="page" id="profile_status" href="#">Profile</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" style="color:white;" href="#">Leaderboard</a>
+                        <a class="nav-link" style="color:white;" id="leaderboard_status" href="#">Leaderboard</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Contact</a>
@@ -221,9 +221,7 @@
                 <div class="d-flex flex-row justify-content-center">
                     <button class="nxt" id="next_2" style="display: none;">NEXT</button>
                 </div>
-
             </div>
-
         </div>
     </div>
     <div id="sectionscoreboard" class="col-12 bg-scorecard d-flex flex-row">
@@ -242,12 +240,70 @@
                     d="M9.669.864 8 0 6.331.864l-1.858.282-.842 1.68-1.337 1.32L2.6 6l-.306 1.854 1.337 1.32.842 1.68 1.858.282L8 12l1.669-.864 1.858-.282.842-1.68 1.337-1.32L13.4 6l.306-1.854-1.337-1.32-.842-1.68zm1.196 1.193.684 1.365 1.086 1.072L12.387 6l.248 1.506-1.086 1.072-.684 1.365-1.51.229L8 10.874l-1.355-.702-1.51-.229-.684-1.365-1.086-1.072L3.614 6l-.25-1.506 1.087-1.072.684-1.365 1.51-.229L8 1.126l1.356.702z" />
                 <path d="M4 11.794V16l4-1 4 1v-4.206l-2.018.306L8 13.126 6.018 12.1z" />
             </svg>
+            <h1 id="accuracy_scoreboard" class="text-center" style="font-size:32px;"></h1>
             <h1 class="text-center" style="font-size:32px;">BADGE</h1>
             <p id="result-badge-icon" class="scoreboard_display"></p>
             <p id="result-badge-name" class="scoreboard_display"></p>
         </div>
 
     </div>
+    <div id="section_profile" class="profile-page">
+
+    <div class="profile-card col-12 col-md-12 col-lg-12 col-xl-12 m-4">
+
+        <div class="profile-header">
+
+            <div class="avatar">
+                🧠
+            </div>
+
+            <h1 id="profile-name"></h1>
+            <p id="profile-age"></p>
+
+            <p class="rank">
+                🏆 Elite Thinker
+            </p>
+
+            <div class="iq-box">
+                IQ SCORE
+                <h2 id="iq_score"></h2>
+            </div>
+
+        </div>
+
+        <div class="stats-grid">
+
+            <div class="stat-box">
+                <h3 id="games-played"></h3>
+                <p>Games</p>
+            </div>
+
+            <div class="stat-box">
+                <h3 id="accuracy"></h3>
+                <p>Accuracy</p>
+            </div>
+
+            <div class="stat-box">
+                <h3 id="fast-answers"></h3>
+                <p>Fast</p>
+            </div>
+
+            <div class="stat-box">
+                <h3 id="streak"></h3>
+                <p>Streak</p>
+            </div>
+
+        </div>
+        <div class="badge-section">
+            <h2>🏅 Achievements</h2>
+            <h2 class="badges">
+            </h2>
+
+        </div>
+
+    </div>
+
+</div>
 
     <script type="text/javascript"
         src="https://new-assets.ccbp.in/frontend/content/static-ccbp-ui-kit/static-ccbp-ui-kit.js">

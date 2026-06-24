@@ -992,14 +992,267 @@ min-height: 100vh;
     border-color: #ffd700;
     color: #ffd700;
 }
+.profile-page{
+    min-height:100vh;
 
+    display:flex;
+    justify-content:center;
+    align-items:center;
 
+    background:
+    linear-gradient(
+    135deg,
+    #070b18,
+    #0f172a,
+    #131c31);
+}
 
+.profile-card{
 
+    width:420px;
 
+    padding:30px;
 
+    border-radius:28px;
 
+    background:rgba(255,255,255,0.07);
 
+    backdrop-filter:blur(18px);
 
+    border:1px solid rgba(255,255,255,0.1);
 
+    box-shadow:
+    0 20px 50px rgba(0,0,0,.45);
 
+    color:white;
+}
+
+.profile-header{
+    text-align:center;
+}
+
+.avatar{
+
+    width:90px;
+    height:90px;
+
+    margin:auto;
+
+    border-radius:50%;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-size:40px;
+
+    background:
+    linear-gradient(
+    135deg,
+    #00e5ff,
+    #7c3aed);
+}
+
+.profile-header h1{
+
+    margin-top:15px;
+
+    font-size:30px;
+}
+
+.rank{
+
+    color:#ffd700;
+
+    font-weight:bold;
+
+    margin-top:5px;
+}
+
+.iq-box{
+
+    margin-top:20px;
+
+    padding:15px;
+
+    border-radius:15px;
+
+    background:
+    rgba(0,229,255,.12);
+}
+
+.iq-box h2{
+
+    margin-top:8px;
+
+    font-size:38px;
+
+    color:#00e5ff;
+}
+
+.stats-grid{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:15px;
+
+    margin-top:25px;
+}
+
+.stat-box{
+
+    text-align:center;
+
+    padding:18px;
+
+    border-radius:16px;
+
+    background:
+    rgba(255,255,255,.05);
+}
+
+.stat-box h3{
+
+    color:#00e5ff;
+
+    font-size:24px;
+}
+
+.badge-section{
+
+    margin-top:25px;
+
+    text-align:center;
+}
+
+.badges{
+
+    margin-top:15px;
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:10px;
+
+    justify-content:center;
+}
+
+.badge{
+
+    padding:8px 15px;
+
+    border-radius:20px;
+
+    font-size:14px;
+}
+
+.bronze{
+    background:#7c4a20;
+}
+
+.silver{
+    background:#6b7280;
+}
+
+.gold{
+    background:#b88900;
+}
+
+.locked{
+    background:#2f3545;
+}
+
+.progress-card{
+
+    margin-top:25px;
+
+    padding:20px;
+
+    border-radius:16px;
+
+    background:
+    rgba(255,255,255,.05);
+}
+
+.progress-bar{
+
+    height:12px;
+
+    background:#1f2937;
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+    margin-top:12px;
+}
+
+.progress-fill{
+
+    width:82%;
+
+    height:100%;
+
+    background:
+    linear-gradient(
+    90deg,
+    #00e5ff,
+    #7c3aed);
+}
+
+.coach-card{
+
+    margin-top:25px;
+
+    padding:20px;
+
+    border-radius:16px;
+
+    background:
+    rgba(124,58,237,.15);
+
+    line-height:1.6;
+}
+
+.btn-container{
+
+    margin-top:25px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:12px;
+}
+
+.profile-btn{
+
+    padding:16px;
+
+    border:none;
+
+    border-radius:15px;
+
+    font-size:16px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    background:
+    linear-gradient(
+    90deg,
+    #00e5ff,
+    #7c3aed);
+
+    color:white;
+}
+
+.secondary-btn{
+
+    background:
+    rgba(255,255,255,.08);
+}

@@ -1,15 +1,19 @@
-
-from unittest import result
-
-from js import document, setInterval, clearInterval,window
+from js import document, setInterval, clearInterval, window
 from pyodide.ffi import create_proxy
 import random
-from pyodide.ffi import create_proxy
 import asyncio
 
+
+username_input = ""
+age_input_value = ""
+current_user = None
+games_completed = 0
+final_score = 0
+
+
 def register(e):
-    name = document.getElementById("reg-name").value.strip()
-    age = document.getElementById("reg-age").value.strip()
+    name     = document.getElementById("reg-name").value.strip()
+    age      = document.getElementById("reg-age").value.strip()
     password = document.getElementById("reg-password").value.strip()
 
     def show_err(msg):
@@ -18,98 +22,181 @@ def register(e):
     if not name:
         show_err("⚠️ Please enter your name")
         return
+    if not age:
+        show_err("⚠️ Please enter your age")
+        return
+    if len(password) < 6:
+        show_err("⚠️ Password must be at least 6 characters")
+        return
 
-    global username_input, age_input_value
-    username_input = name.upper()
+    global username_input, age_input_value, current_user
+
+    username_input  = name.upper()
     age_input_value = age
 
     def go():
-        global games_completed
+        global games_completed, current_user
         games_completed = 0
 
-        document.getElementById("display-username").innerText = username_input
-        document.getElementById("section_new_profile").style.display = "none"
-        document.getElementById("sectiontest").style.display = "block"
-        document.getElementById("games_completed").disabled = True
-        document.getElementById("games_completed").style.opacity = "0.4"
+        current_user = type("User", (), {
+            "name":           username_input,
+            "age":            age_input_value,
+            "total_score":    0,
+            "total_games":    0,
+            "fast_answers":   0,
+            "medium_answers": 0,
+            "slow_answers":   0,
+        })()
+
+        _enter_test_section()
 
     async def check_and_register():
-
-        result = await window.registerUser(
-            username_input,
-            age_input_value,
-            password
-        )
+        result = await window.registerUser(username_input, age_input_value, password)
 
         if not result.success:
             show_err(result.message)
             return
 
         show_err("")
-
-        window.showLoader(
-    2000,
-    "Creating your account...",
-    create_proxy(go)
-)
+        window.showLoader(2000, "Creating your account...", create_proxy(go))
 
     asyncio.create_task(check_and_register())
 
-btn = document.getElementById("btn-register")
-btn.addEventListener("click", create_proxy(register))
+document.getElementById("btn-register").addEventListener(
+    "click", create_proxy(register)
+)
+
+
+async def login(e):
+    global current_user
+
+    name     = document.getElementById("login-name").value.strip().upper()
+    password = document.getElementById("login-password").value.strip()
+
+    def show_err(msg):
+        document.getElementById("login-error").innerText = msg
+
+    if not name:
+        show_err("⚠️ Please enter your name")
+        return
+    if not password:
+        show_err("⚠️ Please enter your password")
+        return
+
+    result = await window.loginUser(name, password)
+
+    if not result.success:
+        show_err(result.message)
+        return
+
+    current_user = result.user
+    show_err("✅ Login successful!")
+
+    def go():
+        document.getElementById("section_login").style.display = "none"
+        _enter_test_section()
+
+    window.showLoader(2000, "Logging you in...", create_proxy(go))
+
+document.getElementById("btn-login").addEventListener(
+    "click", create_proxy(login)
+)
+
+
 def main_page_create_new_profile(_):
     document.getElementById("sectionmain_page").style.display = "none"
     document.getElementById("section_new_profile").style.display = "block"
 
-btn = document.getElementById("create_new_profile")
-btn.addEventListener("click", create_proxy(main_page_create_new_profile))
+document.getElementById("create_new_profile").addEventListener(
+    "click", create_proxy(main_page_create_new_profile)
+)
+
 
 def main_page_login(_):
     document.getElementById("sectionmain_page").style.display = "none"
     document.getElementById("section_login").style.display = "block"
 
-btn = document.getElementById("login_button")
-btn.addEventListener("click", create_proxy(main_page_login))
+document.getElementById("login_button").addEventListener(
+    "click", create_proxy(main_page_login)
+)
+
+
+def _enter_test_section():
+    global games_completed
+    games_completed = 0
+
+    document.getElementById("sectionmain_page").style.display   = "none"
+    document.getElementById("section_new_profile").style.display = "none"
+    document.getElementById("section_login").style.display       = "none"
+    document.getElementById("sectiontest").style.display         = "block"
+
+    document.getElementById("games_completed").disabled    = True
+    document.getElementById("games_completed").style.opacity = "0.4"
+    document.getElementById("games_completed").innerText   = "complete 3 games to go.."
+
+    document.getElementById("tick-reasoning").style.display = "none"
+    document.getElementById("tick-missing").style.display   = "none"
+    document.getElementById("play").disabled        = False
+    document.getElementById("play").style.opacity   = "1"
+    document.getElementById("play-missing").disabled      = False
+    document.getElementById("play-missing").style.opacity = "1"
+
 
 def display_reasoning(e):
-
     def go():
-        document.getElementById("sectiontest").style.display = "none"
+        document.getElementById("sectiontest").style.display      = "none"
         document.getElementById("sectionReasoning").style.display = "block"
         start_game()
+    window.showLoader_game(3000, create_proxy(go))
 
-    window.showLoader_game(3000, create_proxy(go))  
+document.getElementById("play").addEventListener(
+    "click", create_proxy(display_reasoning)
+)
 
-play = document.getElementById("play")
-play.addEventListener("click", create_proxy(display_reasoning))
 
 def display_missing(e):
-    document.getElementById("sectiontest").style.display = "none"
-    document.getElementById("sectionmissing").style.display = "block"
-    start_game_2()
-play2 = document.getElementById("play-missing")
-play2.addEventListener("click", create_proxy(display_missing))
+    def go():
+        document.getElementById("sectiontest").style.display  = "none"
+        document.getElementById("sectionmissing").style.display = "block"
+        start_game_2()
+    window.showLoader_game(3000, create_proxy(go))
+
+document.getElementById("play-missing").addEventListener(
+    "click", create_proxy(display_missing)
+)
+
 
 def games_reasoning(_):
     document.getElementById("sectionReasoning").style.display = "none"
-    document.getElementById("sectiontest").style.display = "block"
-exit1 = document.getElementById("exit")
-exit1.addEventListener("click", create_proxy(games_reasoning))
+    document.getElementById("sectiontest").style.display      = "block"
+
+document.getElementById("exit").addEventListener(
+    "click", create_proxy(games_reasoning)
+)
+
 
 def games_missing(_):
     document.getElementById("sectionmissing").style.display = "none"
-    document.getElementById("sectiontest").style.display = "block"
-exit2 = document.getElementById("exit_2")
-exit2.addEventListener("click", create_proxy(games_missing))
-def section_scoreboard(_):
-    document.getElementById("sectiontest").style.display = "none"
-    document.getElementById("sectionscoreboard").style.display = "block"
-    scoreboard()
-view = document.getElementById("games_completed")
-view.addEventListener("click", create_proxy(section_scoreboard))
+    document.getElementById("sectiontest").style.display    = "block"
+
+document.getElementById("exit_2").addEventListener(
+    "click", create_proxy(games_missing)
+)
+
+
+
+score = 0
+fast_answers = 0
+medium_answers = 0
+slow_answers = 0
+
+selected_questions = []
+current = 0
+answered = False
+time_left = 15
+timer_id = None
 
 pattern_pool = [
-
     {
         "type": "grid",
         "instruction": "Find the missing number:",
@@ -148,8 +235,8 @@ pattern_pool = [
         "instruction": "Find the missing number:",
         "grid": [
             [10, 20, 30],
-            [5,  10, 15],
-            [2,  4,  "?"]
+            [5, 10, 15],
+            [2, 4, "?"]
         ],
         "options": ["6", "8", "10", "12"],
         "answer": "6"
@@ -166,153 +253,61 @@ pattern_pool = [
         "answer": "27"
     },
     {
-        "type": "shape",
-        "instruction": "What shape comes next?",
-        "shapes": ["circle", "square", "triangle", "?"],
-        "options": ["circle", "square", "triangle", "diamond"],
-        "answer": "circle"
+        "type": "grid",
+        "instruction": "Find the missing number:",
+        "grid": [
+            [2, 3, 5],
+            [3, 5, 8],
+            [5, 8, "?"]
+        ],
+        "options": ["12", "13", "14", "15"],
+        "answer": "13"
     },
     {
-        "type": "shape",
-        "instruction": "What shape comes next?",
-        "shapes": ["triangle", "triangle", "square", "square", "?"],
-        "options": ["triangle", "circle", "square", "diamond"],
-        "answer": "circle"
+        "type": "grid",
+        "instruction": "Find the missing number:",
+        "grid": [
+            [1, 4, 9],
+            [4, 9, 16],
+            [9, 16, "?"]
+        ],
+        "options": ["25", "26", "27", "28"],
+        "answer": "25"
     },
     {
-        "type": "shape",
-        "instruction": "What shape comes next?",
-        "shapes": ["circle", "circle", "triangle", "circle", "circle", "?"],
-        "options": ["circle", "square", "triangle", "diamond"],
-        "answer": "triangle"
+        "type": "grid",
+        "instruction": "Find the missing number:",
+        "grid": [
+            [2, 6, 18],
+            [3, 12, 48],
+            [4, 20, "?"]
+        ],
+        "options": ["60", "80", "100", "120"],
+        "answer": "100"
     },
     {
-        "type": "shape",
-        "instruction": "What shape comes next?",
-        "shapes": ["square", "diamond", "square", "diamond", "?"],
-        "options": ["triangle", "circle", "square", "diamond"],
-        "answer": "square"
+        "type": "grid",
+        "instruction": "Find the missing number:",
+        "grid": [
+            [5, 10, 15],
+            [6, 12, 18],
+            [7, 14, "?"]
+        ],
+        "options": ["20", "21", "22", "23"],
+        "answer": "21"
     },
     {
-        "type": "color",
-        "instruction": "What color comes next?",
-        "colors": ["#ff4444", "#ff8800", "#ffd700", "#44ff44", "?"],
-        "options": ["#ff4444", "#00aaff", "#aa44ff", "#ff44aa"],
-        "option_labels": ["Red", "Blue", "Purple", "Pink"],
-        "answer": "Blue",
-        "answer_color": "#00aaff"
-    },
-    {
-        "type": "color",
-        "instruction": "What color comes next?",
-        "colors": ["#ff4444", "#ff4444", "#0044ff", "#0044ff", "?"],
-        "options": ["#ff4444", "#0044ff", "#ffd700", "#44ff44"],
-        "option_labels": ["Red", "Blue", "Yellow", "Green"],
-        "answer": "Red",
-        "answer_color": "#ff4444"
-    },
-    {
-        "type": "color",
-        "instruction": "What color comes next?",
-        "colors": ["#ffd700", "#888888", "#ffd700", "#888888", "?"],
-        "options": ["#888888", "#ffd700", "#ff4444", "#00aaff"],
-        "option_labels": ["Grey", "Gold", "Red", "Blue"],
-        "answer": "Gold",
-        "answer_color": "#ffd700"
+        "type": "grid",
+        "instruction": "Find the missing number:",
+        "grid": [
+            [1, 2, 2],
+            [2, 4, 8],
+            [3, 6, "?"]
+        ],
+        "options": ["16", "18", "20", "24"],
+        "answer": "18"
     },
 ]
-
-selected_questions = []
-current = 0
-answered = False
-time_left = 15
-timer_id = None
-score = 0
-fast_answers = 0
-medium_answers = 0
-slow_answers = 0
-
-
-def render_pattern(q):
-    """Renders the pattern into the pattern-display div based on question type"""
-    display = document.getElementById("pattern-display")
-    display.innerHTML = ""  
-
-    if q["type"] == "grid":
-        html = "<table class='pattern-grid'>"
-        for row in q["grid"]:
-            html += "<tr>"
-            for cell in row:
-                if cell == "?":
-                    html += "<td class='missing'>?</td>"
-                else:
-                    html += f"<td>{cell}</td>"
-            html += "</tr>"
-        html += "</table>"
-        display.innerHTML = html
-
-    elif q["type"] == "shape":
-        html = "<div class='shape-row'>"
-        for i, shape in enumerate(q["shapes"]):
-            if shape == "?":
-                html += """
-                <div class='shape-box missing'>
-                    <svg width='44' height='44' viewBox='0 0 44 44'>
-                        <text x='22' y='30' text-anchor='middle'
-                        fill='#ffd700' font-size='24' font-weight='bold'>?</text>
-                    </svg>
-                </div>"""
-            else:
-                html += f"<div class='shape-box'>{get_svg(shape)}</div>"
-            if i < len(q["shapes"]) - 1:
-                html += "<span class='shape-arrow'>→</span>"
-        html += "</div>"
-        display.innerHTML = html
-
-    elif q["type"] == "color":
-        # Build color circles
-        html = "<div class='color-row'>"
-        for color in q["colors"]:
-            if color == "?":
-                html += "<div class='color-circle missing'>?</div>"
-            else:
-                html += f"<div class='color-circle' style='background:{color};'></div>"
-        html += "</div>"
-        display.innerHTML = html
-
-
-def get_svg(shape):
-    """Returns SVG string for a given shape name"""
-    svgs = {
-        "circle": "<svg width='44' height='44' viewBox='0 0 44 44'><circle cx='22' cy='22' r='17' fill='none' stroke='#ffd700' stroke-width='3'/></svg>",
-        "square": "<svg width='44' height='44' viewBox='0 0 44 44'><rect x='5' y='5' width='34' height='34' fill='none' stroke='#ffd700' stroke-width='3'/></svg>",
-        "triangle": "<svg width='44' height='44' viewBox='0 0 44 44'><polygon points='22,4 40,40 4,40' fill='none' stroke='#ffd700' stroke-width='3'/></svg>",
-        "diamond": "<svg width='44' height='44' viewBox='0 0 44 44'><polygon points='22,4 40,22 22,40 4,22' fill='none' stroke='#ffd700' stroke-width='3'/></svg>",
-    }
-    return svgs.get(shape, "")
-
-
-def render_options(q):
-    """Renders option buttons based on question type"""
-    opts = document.getElementsByClassName("opt")
-    options = q["options"]
-
-    for i in range(len(opts)):
-        if q["type"] == "shape":
-            opts[i].innerHTML = get_svg(options[i])
-            opts[i].setAttribute("data-value", options[i])
-        elif q["type"] == "color":
-            label = q["option_labels"][i]
-            color = options[i]
-            opts[i].innerHTML = f"<div style='width:18px;height:18px;border-radius:50%;background:{color};border:1px solid rgba(255,255,255,0.2);'></div> {label}"
-            opts[i].setAttribute("data-value", label)
-        else:
-            opts[i].innerHTML = options[i]
-            opts[i].setAttribute("data-value", options[i])
-
-        opts[i].style.backgroundColor = ""
-        opts[i].style.color = ""
-        opts[i].style.borderColor = ""
 
 
 def start_timer():
@@ -322,13 +317,14 @@ def start_timer():
 
     def tick():
         global time_left, timer_id
-        document.getElementById("timer").innerText = f"Time:{time_left}"
+        document.getElementById("timer").innerText = f"Time: {time_left}"
         time_left -= 1
         if time_left < 0:
             clearInterval(timer_id)
             document.getElementById("options").style.display = "none"
             document.getElementById("pattern-display").innerHTML = ""
-            document.getElementById("msg").innerText = "Time up Buddy! ⏰"
+            document.getElementById("pattern-instruction").innerText = ""
+            document.getElementById("msg").innerText = "⏰ Time up!"
             document.getElementById("next").style.display = "block"
 
     timer_id = setInterval(create_proxy(tick), 1000)
@@ -337,51 +333,55 @@ def start_timer():
 def show_question():
     global answered
     answered = False
-
     current_q = selected_questions[current]
 
     document.getElementById("msg").innerText = ""
     document.getElementById("next").style.display = "none"
     document.getElementById("options").style.display = "block"
+    
     document.getElementById("pattern-instruction").innerText = current_q["instruction"]
+    
+    # Render grid
+    grid_html = "<table style='margin: 20px auto; border-collapse: collapse;'>"
+    for row in current_q["grid"]:
+        grid_html += "<tr>"
+        for cell in row:
+            grid_html += f"<td style='border: 1px solid #ccc; padding: 10px; text-align: center; width: 40px;'>{cell}</td>"
+        grid_html += "</tr>"
+    grid_html += "</table>"
+    document.getElementById("pattern-display").innerHTML = grid_html
 
-    render_pattern(current_q)
-    render_options(current_q)
+    opts = document.getElementsByClassName("opt")
+    for i in range(len(opts)):
+        opts[i].innerText = current_q["options"][i]
+        opts[i].style.backgroundColor = ""
+        opts[i].style.color = ""
+        opts[i].style.borderColor = ""
 
-    document.getElementById("question-number").innerText = f"{current + 1} of 5"
-    progress = (current / 5) * 100
-    document.getElementById("progress-bar").style.width = f"{progress}%"
+    document.getElementById("question-number").innerText = f"Question {current + 1}/5"
+    document.getElementById("progress-bar").style.width = f"{((current + 1) / 5) * 100}%"
 
     start_timer()
 
 
 def choose_option(e):
     global answered, score, fast_answers, medium_answers, slow_answers
-
     if answered:
         return
-
     clearInterval(timer_id)
     answered = True
 
-    current_q = selected_questions[current]
+    user_choice = e.target.innerText
+    correct = selected_questions[current]["answer"]
 
-    user_choice = e.target.getAttribute("data-value")
-    if not user_choice:
-       
-        user_choice = e.target.parentElement.getAttribute("data-value")
-
-    correct = current_q["answer"]
-
-  
     opts = document.getElementsByClassName("opt")
     for i in range(len(opts)):
-        val = opts[i].getAttribute("data-value")
-        if val == correct:
+        opt_text = opts[i].innerText
+        if opt_text == correct:
             opts[i].style.backgroundColor = "#0a2a0a"
             opts[i].style.borderColor = "#3ADD19"
             opts[i].style.color = "#3ADD19"
-        elif val == user_choice:
+        elif opt_text == user_choice:
             opts[i].style.backgroundColor = "#2a0a0a"
             opts[i].style.borderColor = "#d2230f"
             opts[i].style.color = "#d2230f"
@@ -402,7 +402,7 @@ def choose_option(e):
 
 
 def next_q(e=None):
-    global current, answered, score, games_completed
+    global current, answered, games_completed
     clearInterval(timer_id)
     answered = False
     current += 1
@@ -410,27 +410,20 @@ def next_q(e=None):
     if current < 5:
         show_question()
     else:
-        document.getElementById("pattern-display").innerHTML = ""
+        document.getElementById("pattern-display").innerHTML  = ""
         document.getElementById("pattern-instruction").innerText = ""
-        document.getElementById("options").style.display = "none"
-        document.getElementById("next").style.display = "none"
-        document.getElementById("timer").style.display = "none"
+        document.getElementById("options").style.display      = "none"
+        document.getElementById("next").style.display         = "none"
+        document.getElementById("timer").style.display        = "none"
         document.getElementById("progress-bar-bg").style.display = "none"
-        document.getElementById("msg").innerText = "Pattern Master! 🎉"
-        document.getElementById("question-number").innerText = f"Final Score: {score}"
+        document.getElementById("msg").innerText              = "🎉 Pattern Master!"
+        document.getElementById("question-number").innerText  = f"Final Score: {score}"
 
         games_completed += 1
-        if games_completed == 2:
-            document.getElementById("games_completed").innerText = "View your IQ score"
-            document.getElementById("games_completed").disabled = False
-            document.getElementById("games_completed").style.opacity = "1"
-        else:
-            document.getElementById("games_completed").innerText = str(2 - games_completed) + " more to go!"
-            document.getElementById("games_completed").disabled = True
-            document.getElementById("games_completed").style.opacity = "0.5"
+        _update_games_completed_btn()
 
         document.getElementById("tick-reasoning").style.display = "inline"
-        document.getElementById("play").disabled = True
+        document.getElementById("play").disabled      = True
         document.getElementById("play").style.opacity = "0.5"
 
 
@@ -438,17 +431,16 @@ def start_game(e=None):
     global current, score, selected_questions
     global fast_answers, medium_answers, slow_answers
 
-    current = 0
-    score = 0
-    fast_answers = 0
+    current       = 0
+    score         = 0
+    fast_answers  = 0
     medium_answers = 0
-    slow_answers = 0
+    slow_answers  = 0
 
-    # Pick 5 random questions from pool
     selected_questions = random.sample(pattern_pool, 5)
 
-    document.getElementById("score-card").innerText = "Score: 0"
-    document.getElementById("timer").style.display = "block"
+    document.getElementById("score-card").innerText          = "Score: 0"
+    document.getElementById("timer").style.display           = "block"
     document.getElementById("progress-bar-bg").style.display = "block"
     show_question()
 
@@ -458,6 +450,18 @@ for i in range(len(opts)):
     opts[i].addEventListener("click", create_proxy(choose_option))
 
 document.getElementById("next").addEventListener("click", create_proxy(next_q))
+
+
+score_2 = 0
+fast_answers_2 = 0
+medium_answers_2 = 0
+slow_answers_2 = 0
+
+selected_questions_2 = []
+current_2 = 0
+answered_2 = False
+time_left_2 = 15
+timer_id_2 = None
 
 question_pool_2 = [
     {
@@ -512,16 +516,6 @@ question_pool_2 = [
     },
 ]
 
-selected_questions_2 = []
-current_2 = 0
-answered_2 = False
-time_left_2 = 15
-timer_id_2 = None
-score_2 = 0
-fast_answers_2 = 0
-medium_answers_2 = 0
-slow_answers_2 = 0
-
 
 def start_timer_2():
     global timer_id_2, time_left_2, answered_2
@@ -534,55 +528,55 @@ def start_timer_2():
         time_left_2 -= 1
         if time_left_2 < 0:
             clearInterval(timer_id_2)
-            document.getElementById("options_2").style.display = "none"
-            document.getElementById("question_2").innerText = ""
-            document.getElementById("msg_2").innerText = "Time up Buddy!⏰"
-            document.getElementById("next_2").style.display = "block"
+            document.getElementById("options_2").style.display  = "none"
+            document.getElementById("question_2").innerText     = ""
+            document.getElementById("msg_2").innerText          = "⏰ Time up!"
+            document.getElementById("next_2").style.display     = "block"
 
     timer_id_2 = setInterval(create_proxy(tick_2), 1000)
 
 
 def show_question_2():
     global answered_2
-    answered_2 = False
+    answered_2    = False
+    current_q_2   = selected_questions_2[current_2]
 
-    current_q_2 = selected_questions_2[current_2]
-
-    document.getElementById("msg_2").innerText = ""
-    document.getElementById("next_2").style.display = "none"
+    document.getElementById("msg_2").innerText        = ""
+    document.getElementById("next_2").style.display   = "none"
     document.getElementById("options_2").style.display = "block"
-    document.getElementById("question_2").innerText = current_q_2["question"]
+    document.getElementById("question_2").innerText   = current_q_2["question"]
 
     opts_2 = document.getElementsByClassName("opt_2")
     for i in range(len(opts_2)):
-        opts_2[i].innerText = current_q_2["options"][i]
+        opts_2[i].innerText              = current_q_2["options"][i]
         opts_2[i].style.backgroundColor = ""
-        opts_2[i].style.color = ""
+        opts_2[i].style.color            = ""
+        opts_2[i].style.borderColor      = ""
 
     start_timer_2()
 
 
 def choose_option_2(e):
     global answered_2, score_2, fast_answers_2, medium_answers_2, slow_answers_2
-
     if answered_2:
         return
-
     clearInterval(timer_id_2)
-    answered_2 = True
+    answered_2    = True
 
     user_choice_2 = e.target.innerText
-    correct_2 = selected_questions_2[current_2]["answer"]
+    correct_2     = selected_questions_2[current_2]["answer"]
 
     opts_2 = document.getElementsByClassName("opt_2")
     for i in range(len(opts_2)):
-        option_text_2 = opts_2[i].innerText
-        if option_text_2 == correct_2:
-            opts_2[i].style.backgroundColor = "#3ADD19"
-            opts_2[i].style.color = "white"
-        elif option_text_2 == user_choice_2:
-            opts_2[i].style.backgroundColor = "#d2230f"
-            opts_2[i].style.color = "white"
+        opt_text = opts_2[i].innerText
+        if opt_text == correct_2:
+            opts_2[i].style.backgroundColor = "#0a2a0a"
+            opts_2[i].style.borderColor      = "#3ADD19"
+            opts_2[i].style.color            = "#3ADD19"
+        elif opt_text == user_choice_2:
+            opts_2[i].style.backgroundColor = "#2a0a0a"
+            opts_2[i].style.borderColor      = "#d2230f"
+            opts_2[i].style.color            = "#d2230f"
 
     if user_choice_2 == correct_2:
         if time_left_2 >= 10:
@@ -596,53 +590,45 @@ def choose_option_2(e):
             slow_answers_2 += 1
 
     document.getElementById("score-card_2").innerText = f"Score: {score_2}"
-    document.getElementById("next_2").style.display = "block"
+    document.getElementById("next_2").style.display   = "block"
 
 
 def next_q_2(e=None):
-    global current_2, answered_2, score_2, games_completed
+    global current_2, answered_2, games_completed
     clearInterval(timer_id_2)
     answered_2 = False
     current_2 += 1
 
-    if current_2 < 5: 
+    if current_2 < 5:
         show_question_2()
     else:
-        document.getElementById("question_2").innerText = "Quiz Finished 🎉"
-        document.getElementById("options_2").style.display = "none"
-        document.getElementById("next_2").style.display = "none"
-        document.getElementById("timer_2").style.display = "none"
-        
-        games_completed += 1
-        if games_completed == 2:
-            document.getElementById("games_completed").innerText = "View your IQ score"
-            document.getElementById("games_completed").disabled = False
-            document.getElementById("games_completed").style.opacity = "1"
-        else:
-            document.getElementById("games_completed").innerText = str(2 - games_completed) + " more to go!"
-            document.getElementById("games_completed").disabled = True
-            document.getElementById("games_completed").style.opacity = "0.5"
+        document.getElementById("question_2").innerText        = "🎉 Quiz Finished!"
+        document.getElementById("options_2").style.display     = "none"
+        document.getElementById("next_2").style.display        = "none"
+        document.getElementById("timer_2").style.display       = "none"
 
-        document.getElementById("tick-missing").style.display = "inline"
-        document.getElementById("play-missing").disabled = True
-        document.getElementById("play-missing").style.opacity = "0.5"
+        games_completed += 1
+        _update_games_completed_btn()
+
+        document.getElementById("tick-missing").style.display      = "inline"
+        document.getElementById("play-missing").disabled           = True
+        document.getElementById("play-missing").style.opacity      = "0.5"
 
 
 def start_game_2(e=None):
     global current_2, score_2, selected_questions_2
     global fast_answers_2, medium_answers_2, slow_answers_2
 
-    current_2 = 0
-    score_2 = 0
+    current_2      = 0
+    score_2        = 0
     fast_answers_2 = 0
     medium_answers_2 = 0
-    slow_answers_2 = 0
-
+    slow_answers_2= 0
 
     selected_questions_2 = random.sample(question_pool_2, 5)
 
-    document.getElementById("score-card_2").innerText = f"Score: {score_2}"
-    document.getElementById("timer_2").style.display = "block"
+    document.getElementById("score-card_2").innerText = "Score: 0"
+    document.getElementById("timer_2").style.display  = "block"
     show_question_2()
 
 
@@ -651,8 +637,158 @@ for i in range(len(opts_2)):
     opts_2[i].addEventListener("click", create_proxy(choose_option_2))
 
 document.getElementById("next_2").addEventListener("click", create_proxy(next_q_2))
+
+
+def load_profile(e):
+    global current_user
+    document.getElementById("sectiontest").style.display    = "none"
+    document.getElementById("section_profile").style.display = "block"
+
+    if not current_user:
+        return
+
+    name  = getattr(current_user, "name",  "") or current_user["name"]  if isinstance(current_user, dict) else current_user.name
+    age   = getattr(current_user, "age",   "") or ""
+    ts    = int(getattr(current_user, "total_score",  0) or 0)
+    tg    = int(getattr(current_user, "total_games",  0) or 0)
+    fa    = int(getattr(current_user, "fast_answers",  0) or 0)
+    ma    = int(getattr(current_user, "medium_answers",0) or 0)
+    sa    = int(getattr(current_user, "slow_answers",  0) or 0)
+    overall_acc = int(getattr(current_user, "accuracy", 0) or 0) 
+
+    document.getElementById("profile-name").innerText  = name
+    document.getElementById("profile-age").innerText   = f"Age: {age}"
+    document.getElementById("iq_score").innerText      = str(ts)
+    document.getElementById("games-played").innerText  = str(tg)
+    document.getElementById("fast-answers").innerText  = str(fa)
+
+    document.getElementById("accuracy").innerText = f"{overall_acc}%"
+ 
+    # Display streak
+    document.getElementById("streak").innerText = f"🔥 {tg}"
+
+    if ts >= 40:
+        badge = "🥇 Genius"
+    elif ts >= 25:
+        badge = "🥈 Smart Thinker"
+    else:
+        badge = "🥉 Rising Mind"
+
+    badges_el = document.querySelector(".badges")
+    if badges_el:
+        badges_el.innerText = badge
+
+document.getElementById("profile_status").addEventListener(
+    "click", create_proxy(load_profile)
+)
+
+
+def section_scoreboard(_):
+    document.getElementById("sectiontest").style.display       = "none"
+    document.getElementById("sectionscoreboard").style.display = "block"
+    scoreboard()
+
+document.getElementById("games_completed").addEventListener(
+    "click", create_proxy(section_scoreboard)
+)
+
+
 def scoreboard():
-    global score, score_2,username_input,age_input_value,final_score
-    final_score = score + score_2
-    document.getElementById("scoreboard_display").innerText = f"Your Final Score: {final_score}"
-  
+    global score, score_2, final_score, current_user
+    global fast_answers, medium_answers, slow_answers
+    global fast_answers_2, medium_answers_2, slow_answers_2
+
+    if games_completed < 2:
+        return
+
+    final_score    = score + score_2
+    total_fast     = fast_answers   + fast_answers_2
+    total_medium   = medium_answers + medium_answers_2
+    total_slow     = slow_answers   + slow_answers_2
+    total_answered = total_fast + total_medium + total_slow
+
+    document.getElementById("scoreboard_display").innerText = str(final_score)
+    if total_answered > 0:
+        instant_accuracy = round((total_fast / total_answered) * 100)
+    else:
+        instant_accuracy = 0
+ 
+    document.getElementById("accuracy_scoreboard").innerText = f"{instant_accuracy}%"
+
+    if final_score >= 40:
+        badge_icon = "🥇"
+        badge_name = "Genius"
+    elif final_score >= 25:
+        badge_icon = "🥈"
+        badge_name = "Smart Thinker"
+    else:
+        badge_icon = "🥉"
+        badge_name = "Rising Mind"
+
+    document.getElementById("result-badge-icon").innerText = badge_icon
+    document.getElementById("result-badge-name").innerText = badge_name
+
+    async def save_and_rank():
+        global current_user
+
+        name = ""
+        try:
+            name = current_user.name
+        except Exception:
+            try:
+                name = current_user["name"]
+            except Exception:
+                pass
+
+        if not name:
+            document.getElementById("result-rank").innerText = "N/A"
+            return
+
+        tg = 0
+        try:
+            tg = int(current_user.total_games or 0)
+        except Exception:
+            try:
+                tg = int(current_user["total_games"] or 0)
+            except Exception:
+                pass
+        tg += 1
+
+        await window.updateScore(
+            name,
+            final_score,
+            total_fast,
+            total_medium,
+            total_slow,
+            tg
+        )
+
+        rank = await window.getUserRank(name)
+        if rank:
+            document.getElementById("result-rank").innerText = f"#{rank}"
+        else:
+            document.getElementById("result-rank").innerText = "—"
+
+        try:
+            current_user.total_score    = final_score
+            current_user.fast_answers   = total_fast
+            current_user.medium_answers = total_medium
+            current_user.slow_answers   = total_slow
+            current_user.total_games    = tg
+        except Exception:
+            pass
+
+    asyncio.create_task(save_and_rank())
+
+
+def _update_games_completed_btn():
+    remaining = 2 - games_completed
+    btn = document.getElementById("games_completed")
+    if games_completed >= 2:
+        btn.innerText        = "🏆 View your IQ Score"
+        btn.disabled         = False
+        btn.style.opacity    = "1"
+    else:
+        btn.innerText        = f"{remaining} more game(s) to go!"
+        btn.disabled         = True
+        btn.style.opacity    = "0.5"
