@@ -139,3 +139,22 @@ window.getLeaderboard = getLeaderboard;
 window.getUserRank    = getUserRank;
 window.showLoader     = showLoader;
 window.showLoader_game = showLoader_game;
+
+//score increase animation
+const score = document.getElementById("score");
+
+let current = 0;
+const target = 95;
+const duration = 3000; // 2 sec
+const stepTime = duration / target;
+
+const timer = setInterval(() => {
+
+    current++;
+    score.textContent = current;
+
+    if(current >= target){
+        clearInterval(timer);
+    }
+
+}, stepTime);
