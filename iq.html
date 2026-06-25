@@ -278,61 +278,48 @@
 
     </div>
     <div id="section_profile" class="profile-page">
+        <a href="#profile" class="profile-btn">Profile</a>
+        <a href="#" class="overlay" id="profile"></a>
 
-    <div class="profile-card col-12 col-md-12 col-lg-12 col-xl-12 m-4">
-
-        <div class="profile-header">
-            <button id="back-to-main" class="back-button">← Back</button>
-
-            <div class="avatar">
-                🧠
+        <div class="profile-panel">
+            <div class="profile-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+            </svg>
+            </div>    
+            <h1 style="font-family:'Times New Roman', Times, serif" id="profile-name">..</h1>
+            <div class="profile-container mt-4">
+                <div class="profile-card">
+                    <h1 style="font-size:16px;">Age</h1>
+                    <p id="profile-age"></p>
+                </div>
+                <div class="profile-card">
+                    <h1 style="font-size:16px;">Rank</h1>
+                    <p></p>
+                </div>
+                <div class="profile-card">
+                    <h1 style="font-size:16px;">Badge</h1>
+                    <p></p>
+                </div>
+                <div class="profile-card">
+                    <h1 style="font-size:16px;">Score</h1>
+                    <p></p>
+                </div>
+                <div class="profile-card">
+                    <h1 style="font-size:16px;">Games Played</h1>
+                    <p></p>
+                </div>
+                <div class="profile-card">
+                    <h1 style="font-size:16px;">Correct Answers</h1>
+                    <p></p>
+                </div>
             </div>
-
-            <h1 id="profile-name"></h1>
-            <p id="profile-age"></p>
-
-            <p class="rank">
-                🏆 Elite Thinker
-            </p>
-
-            <div class="iq-box">
-                IQ SCORE
-                <h2 id="iq_score"></h2>
-            </div>
-
         </div>
 
-        <div class="stats-grid">
+    
 
-            <div class="stat-box">
-                <h3 id="games-played"></h3>
-                <p>Games</p>
-            </div>
 
-            <div class="stat-box">
-                <h3 id="accuracy"></h3>
-                <p>Accuracy</p>
-            </div>
-
-            <div class="stat-box">
-                <h3 id="fast-answers"></h3>
-                <p>Fast</p>
-            </div>
-
-            <div class="stat-box">
-                <h3 id="streak"></h3>
-                <p>Streak</p>
-            </div>
-
-        </div>
-        <div class="badge-section">
-            <h2>🏅 Achievements</h2>
-            <h2 class="badges">
-            </h2>
-
-        </div>
-
-    </div>
 
 </div>
 
