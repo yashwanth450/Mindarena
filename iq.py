@@ -667,7 +667,7 @@ def load_profile(e):
     document.getElementById("iq_score").innerText      = str(ts)
     document.getElementById("games-played").innerText  = str(tg)
     document.getElementById("fast-answers").innerText  = str(fa)
-    document.getElementById("streak").innerText = str( "🔥"+tg)
+   
 
     document.getElementById("accuracy").innerText = f"{overall_acc}%"
  
@@ -728,14 +728,17 @@ def scoreboard():
         badge_icon = "🥇"
         badge_name = "Genius"
         document.getElementById("compliment").innerText = "Great minds aren't born—they're built. Today, you've proven your potential."
+        document.getElementById("badge_scoreboard").innerText = "🥇Genius"
     elif final_score >= 25:
         badge_icon = "🥈"
         badge_name = "Smart Thinker"
         document.getElementById("compliment").innerText = "You're climbing fast. Stay consistent and the leaderboard will soon know your name."
+        document.getElementById("badge_scoreboard").innerText = "🥈Smart Thinker"
     else:
         badge_icon = "🥉"
         badge_name = "Rising Mind"
         document.getElementById("compliment").innerText = "Success isn't measured by one game. Every attempt makes you smarter than yesterday."
+        document.getElementById("badge_scoreboard").innerText = "🥉Rising Mind"
 
     document.getElementById("result-badge-icon").innerText = badge_icon
     document.getElementById("result-badge-name").innerText = badge_name
