@@ -225,48 +225,53 @@
         </div>
     </div>
     <div id="sectionscoreboard" class="col-12 bg-scorecard d-flex flex-column">
+        <p class="brand"></p>
     
         <div class="card-box2">
            <div class="back-rank m-2 shadow">
-              <h1 class="text-center">RANK</h1>
+              <h1 class="text-center score-rank">RANK</h1>
               <p id="result-rank" class="scoreboard_display">#</p>
            </div>
            <div class="back-iqscore shadow-lg">
-              <h1 class="text-white mt-3">IQ SCORE</h1>
+              <h1 class="text-white mt-3 score-score">IQ SCORE</h1>
               <h2 id="score" class="text-white mt-5">0</h2>
               <p  class="scoreboard_display"></p>
            </div>
            <div class="back-badge m-2 shadow d-flex flex-row">
-               <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-award"
+               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-award"
                 viewBox="0 0 16 16">
                 <path
                     d="M9.669.864 8 0 6.331.864l-1.858.282-.842 1.68-1.337 1.32L2.6 6l-.306 1.854 1.337 1.32.842 1.68 1.858.282L8 12l1.669-.864 1.858-.282.842-1.68 1.337-1.32L13.4 6l.306-1.854-1.337-1.32-.842-1.68zm1.196 1.193.684 1.365 1.086 1.072L12.387 6l.248 1.506-1.086 1.072-.684 1.365-1.51.229L8 10.874l-1.355-.702-1.51-.229-.684-1.365-1.086-1.072L3.614 6l-.25-1.506 1.087-1.072.684-1.365 1.51-.229L8 1.126l1.356.702z" />
                 <path d="M4 11.794V16l4-1 4 1v-4.206l-2.018.306L8 13.126 6.018 12.1z" />
                 </svg>
                <h1  class="text-center" style="font-size:32px;"></h1>
-               <h1 class="text-center mb-2">BADGE</h1>
+               <h1 class="text-center mb-2 score-badge">BADGE</h1>
                <p></p>
            </div>
         </div>
         <div class="card-box1">
             <div class="back-accuracy m-2">
-                <h1 style=" font-size:26px;">Accuracy</h1>
-                <p></p>
+                <h1 style=" font-size:26px;" class="colour-palate">Accuracy</h1>
+                <p class="content-palate" id="accuracy_scoreboard"></p>
+                 <div class="sb-bar-bg"><div class="sb-bar-fill" id="accuracy-bar" style="--bar-w:0%"></div></div>
             </div>
             <div class="fast-ans m-2">
-                <h1 style=" font-size:26px;">Fast-Ans</h1>
-                <p></p>
+                <h1 style=" font-size:26px;" class="colour-palate">Fast-Ans</h1>
+                <p class="content-palate" id="fastanswers_scoreboard"></p>
+                <div class="sb-bar-bg"><div class="sb-bar-fill" id="fast-bar" style="--bar-w:0%"></div></div>
             </div>
             <div class="back-score m-2">
-                <h1 style=" font-size:26px;">Score</h1>
-                <p id="scoreboard_display" class="scoreboard_display"></p>
+                <h1 style=" font-size:26px;" class="colour-palate">Score</h1>
+                <p id="scoreboard_display" class="scoreboard_display content-palate"></p>
+                <div class="sb-bar-bg"><div class="sb-bar-fill" id="score-bar" style="--bar-w:0%"></div></div>
             </div>
             <div class="back-streak m-2">
-                <h1 style=" font-size:26px;">Streak</h1>
-                <p id="scoreboard_display" class="scoreboard_display"></p>
+                <h1 style=" font-size:26px;" class="colour-palate">Streak</h1>
+                <p id="streak_score" class="scoreboard_display content-palate">🔥4</p>
+                <div class="sb-bar-bg"><div class="sb-bar-fill" id="streak-bar" style="--bar-w:0%"></div></div>
             </div>
         </div>
-        <h1 class="compliment">Elite Minds Focus on Precision!</h1>
+        <h1 class="compliment" id="compliment">h1>
     </div> 
 
 

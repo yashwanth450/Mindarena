@@ -93,6 +93,7 @@ async function updateScore(name, finalScore, fastAnswers, mediumAnswers, slowAns
     const newFastAnswers = (userData.fast_answers || 0) + fastAnswers;
     const newMediumAnswers = (userData.medium_answers || 0) + mediumAnswers;
     const newSlowAnswers = (userData.slow_answers || 0) + slowAnswers;
+    const newtotalGames = (userData.total_games || 0) +totalGames;
     const totalAnswers = newFastAnswers + newMediumAnswers + newSlowAnswers;
     const overallAccuracy = totalAnswers > 0 ? Math.round((newFastAnswers / totalAnswers) * 100) : 0;
  
@@ -105,7 +106,7 @@ async function updateScore(name, finalScore, fastAnswers, mediumAnswers, slowAns
             fast_answers: newFastAnswers,
             medium_answers: newMediumAnswers,
             slow_answers: newSlowAnswers,
-            total_games: totalGames,
+            total_games:  newtotalGames,
             accuracy: overallAccuracy,
             total_answers: totalAnswers
         })
