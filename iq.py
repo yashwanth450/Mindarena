@@ -11,6 +11,14 @@ games_completed = 0
 final_score = 0
 
 
+def get_current_name():
+    try:
+        return current_user.name
+    except Exception:
+        try:
+            return current_user["name"]
+        except Exception:
+            return ""
 def register(e):
     name     = document.getElementById("reg-name").value.strip()
     age      = document.getElementById("reg-age").value.strip()
@@ -27,6 +35,14 @@ def register(e):
         return
     if len(password) < 6:
         show_err("⚠️ Password must be at least 6 characters")
+        return
+    if not age.isdigit():
+        show_err("⚠️ Age must be a valid number")
+        return
+    age = int(age)
+
+    if age <5  or age>100:
+        show_err("⚠️ Please enter a valid age")
         return
 
     global username_input, age_input_value, current_user
@@ -47,8 +63,10 @@ def register(e):
             "medium_answers": 0,
             "slow_answers":   0,
         })()
+        window._currentUser = current_user
 
         _enter_test_section()
+        document.getElementById("modal").classList.add("show")
 
     async def check_and_register():
         result = await window.registerUser(username_input, age_input_value, password)
@@ -90,11 +108,13 @@ async def login(e):
         return
 
     current_user = result.user
+    window._currentUser = result.user
     show_err("✅ Login successful!")
 
     def go():
         document.getElementById("section_login").style.display = "none"
         _enter_test_section()
+        document.getElementById("modal").classList.add("show")
 
     window.showLoader(2000, "Logging you in...", create_proxy(go))
 
@@ -122,7 +142,7 @@ document.getElementById("login_button").addEventListener(
 
 
 def _enter_test_section():
-    global games_completed
+    global games_completed,result
     games_completed = 0
 
     document.getElementById("sectionmain_page").style.display   = "none"
@@ -140,43 +160,71 @@ def _enter_test_section():
     document.getElementById("play").style.opacity   = "1"
     document.getElementById("play-missing").disabled      = False
     document.getElementById("play-missing").style.opacity = "1"
-
-
+   
 def display_reasoning(e):
-    def go():
-        document.getElementById("sectiontest").style.display      = "none"
-        document.getElementById("sectionReasoning").style.display = "block"
-        start_game()
-    window.showLoader_game(3000, create_proxy(go))
+    async def check_limit():
+        name = get_current_name()
+        result = await window.getDailyPlayStatus(name)
 
+        if not result.allowed:
+            document.getElementById("games_completed").innerText = result.message
+            document.getElementById("play").style.display = "none"
+            
+            document.getElementById("play").style.cursor = "not-allowed"
+
+            document.getElementById("play-missing").style.display = "none"
+    
+            document.getElementById("play-missing").style.cursor = "not-allowed"
+
+            document.getElementById("games_completed").innerText = result.message
+            document.getElementById("games_completed").style.color = "red"
+            document.getElementById("games_completed").style.opacity = "1"
+            document.getElementById("games_completed").disabled = True
+            return
+
+        def go():
+            document.getElementById("sectiontest").style.display      = "none"
+            document.getElementById("sectionReasoning").style.display = "block"
+            start_game()
+
+        window.showLoader_game(3000, create_proxy(go))
+
+    asyncio.create_task(check_limit())
+
+
+def display_missing(e):
+    async def check_limit():
+        global result
+        name = get_current_name()
+        result = await window.getDailyPlayStatus(name)
+
+        if not result.allowed:
+            document.getElementById("games_completed").innerText = result.message
+            return
+
+        def go():
+            document.getElementById("sectiontest").style.display  = "none"
+            document.getElementById("sectionmissing").style.display = "block"
+            start_game_2()
+
+        window.showLoader_game(3000, create_proxy(go))
+
+    asyncio.create_task(check_limit())
 document.getElementById("play").addEventListener(
     "click", create_proxy(display_reasoning)
 )
 
-
-def display_missing(e):
-    def go():
-        document.getElementById("sectiontest").style.display  = "none"
-        document.getElementById("sectionmissing").style.display = "block"
-        start_game_2()
-    window.showLoader_game(3000, create_proxy(go))
-
 document.getElementById("play-missing").addEventListener(
     "click", create_proxy(display_missing)
-)
-def back_to_main(_):
-    document.getElementById("section_profile").style.display = "none"
-    document.getElementById("sectiontest").style.display     = "block"  
-document.getElementById("back-to-main").addEventListener(
-    "click", create_proxy(back_to_main)
-)
-
-
+)    
 def games_reasoning(_):
     document.getElementById("sectionReasoning").style.display = "none"
     document.getElementById("sectiontest").style.display      = "block"
 
 document.getElementById("exit").addEventListener(
+    "click", create_proxy(games_reasoning)
+)
+document.getElementById("continue").addEventListener(
     "click", create_proxy(games_reasoning)
 )
 
@@ -188,6 +236,11 @@ def games_missing(_):
 document.getElementById("exit_2").addEventListener(
     "click", create_proxy(games_missing)
 )
+document.getElementById("continue_2").addEventListener(
+    "click", create_proxy(games_missing)
+)
+
+
 
 
 
@@ -423,13 +476,17 @@ def next_q(e=None):
         document.getElementById("timer").style.display        = "none"
         document.getElementById("progress-bar-bg").style.display = "none"
         document.getElementById("msg").innerText              = "🎉 Pattern Master!"
-        document.getElementById("question-number").innerText  = f"Final Score: {score}"
+        document.getElementById("exit").style.display         = "none"
+        document.getElementById("continue").style.display         = "block"
+        document.getElementById("score-card").style.display         = "none"
+        document.getElementById("question-number").style.display         = "none"  
+
 
         games_completed += 1
         _update_games_completed_btn()
 
         document.getElementById("tick-reasoning").style.display = "inline"
-        document.getElementById("play").disabled      = True
+        document.getElementById("play").style.display = "none"
         document.getElementById("play").style.opacity = "0.5"
 
 
@@ -558,6 +615,8 @@ def show_question_2():
         opts_2[i].style.backgroundColor = ""
         opts_2[i].style.color            = ""
         opts_2[i].style.borderColor      = ""
+    document.getElementById("question-number_2").innerText = f"Question {current_2 + 1}/5"
+    document.getElementById("progress-bar_2").style.width = f"{((current_2 + 1) / 5) * 100}%"    
 
     start_timer_2()
 
@@ -584,6 +643,8 @@ def choose_option_2(e):
             opts_2[i].style.borderColor      = "#d2230f"
             opts_2[i].style.color            = "#d2230f"
 
+
+
     if user_choice_2 == correct_2:
         if time_left_2 >= 10:
             score_2 += 5
@@ -608,16 +669,25 @@ def next_q_2(e=None):
     if current_2 < 5:
         show_question_2()
     else:
-        document.getElementById("question_2").innerText        = "🎉 Quiz Finished!"
+        document.getElementById("question_2").innerText        = "🎉 missing master"
         document.getElementById("options_2").style.display     = "none"
         document.getElementById("next_2").style.display        = "none"
+        document.getElementById("exit_2").style.display        = "none"
         document.getElementById("timer_2").style.display       = "none"
+        document.getElementById("progress-bar-bg_2").style.display = "none"
+        document.getElementById("score-card_2").style.display         = "none"
+        document.getElementById("question-number_2").style.display         = "none" 
+        document.getElementById("continue_2").style.display         = "block"
+        
+      
+        
+
 
         games_completed += 1
         _update_games_completed_btn()
 
         document.getElementById("tick-missing").style.display      = "inline"
-        document.getElementById("play-missing").disabled           = True
+        document.getElementById("play-missing").style.display      = "none"
         document.getElementById("play-missing").style.opacity      = "0.5"
 
 
@@ -635,6 +705,7 @@ def start_game_2(e=None):
 
     document.getElementById("score-card_2").innerText = "Score: 0"
     document.getElementById("timer_2").style.display  = "block"
+    document.getElementById("progress-bar-bg_2").style.display = "block"
     show_question_2()
 
 
@@ -646,10 +717,7 @@ document.getElementById("next_2").addEventListener("click", create_proxy(next_q_
 
 
 def load_profile(e):
-    global current_user
-    document.getElementById("sectiontest").style.display    = "none"
-    document.getElementById("section_profile").style.display = "block"
-
+    global total_score,total_games,fast_answers,medium_answers,slow_answers,accuracy
     if not current_user:
         return
 
@@ -663,30 +731,52 @@ def load_profile(e):
     overall_acc = int(getattr(current_user, "accuracy", 0) or 0) 
 
     document.getElementById("profile-name").innerText  = name
-    document.getElementById("profile-age").innerText   = f"Age: {age}"
-    document.getElementById("iq_score").innerText      = str(ts)
+    document.getElementById("profile-age").innerText   = f"{age}"
+    document.getElementById("profile-score").innerText  = str(ts)
     document.getElementById("games-played").innerText  = str(tg)
     document.getElementById("fast-answers").innerText  = str(fa)
-   
+    document.getElementById("correct-answers").innerText  = (fa+ma+sa)
+    document.getElementById("xp").innerText  = f"{(fa+ma+sa)*10} XP"
+    async def set_profile_rank():
+     rank = await window.getUserRank(name)
+     if rank:
+        document.getElementById("profile-rank").innerText = f"#{rank}"
+     else:
+        document.getElementById("profile-rank").innerText = "N/A"
 
+    document.getElementById("profile-rank").innerText = "..."
+    asyncio.create_task(set_profile_rank())
+
+   
     document.getElementById("accuracy").innerText = f"{overall_acc}%"
- 
-  
-   
-    if ts >= 40:
-        badge = "🥇 Genius"
-    elif ts >= 25:
-        badge = "🥈 Smart Thinker"
+    if ts >= 75 and overall_acc >= 98:
+      document.getElementById("profile-badge").innerText =  "Mastermind"
+      document.getElementById("profile-quote").innerText =  "Champion Mind Activated."
+
+    elif ts >= 50 and overall_acc >= 95:
+       document.getElementById("profile-badge").innerText ="Elite Mind";
+       document.getElementById("profile-quote").innerText =  "Pure Genius Energy."
+    elif ts >= 35 and overall_acc >= 90:
+      document.getElementById("profile-badge").innerText = "Genius";
+      document.getElementById("profile-quote").innerText = "Great Progress Ahead."
+    elif ts >= 20 and overall_acc >= 80:
+       document.getElementById("profile-badge").innerText = "Strategist";
+       document.getElementById("profile-quote").innerText = "Keep Climbing Higher."
+    elif ts >= 10 and overall_acc >= 70:
+        document.getElementById("profile-badge").innerText = "Thinker";
+        document.getElementById("profile-quote").innerText = "Keep Training Daily."
+    elif ts >= 5 and overall_acc >= 60:
+       document.getElementById("profile-badge").innerText = "Learner";
+       document.getElementById("profile-quote").innerText =  "Think Beyond Limits."
+    elif ts >= 1:
+       document.getElementById("profile-badge").innerText = "Rising Mind";
+       document.getElementById("profile-quote").innerText =  "Every Answer Counts."
     else:
-        badge = "🥉 Rising Mind"
-
-    badges_el = document.querySelector(".badges")
-    if badges_el:
-        badges_el.innerText = badge
-
-document.getElementById("profile_status").addEventListener(
-    "click", create_proxy(load_profile)
-)
+       document.getElementById("profile-badge").innerText = "No Badge"; 
+       document.getElementById("profile-quote").innerText = "Stay Hungry. Think."
+    
+       
+window._load_profile_proxy = create_proxy(load_profile)        
 
 
 def section_scoreboard(_):
@@ -698,11 +788,10 @@ document.getElementById("games_completed").addEventListener(
     "click", create_proxy(section_scoreboard)
 )
 
-
 def scoreboard():
     global score, score_2, final_score, current_user
     global fast_answers, medium_answers, slow_answers
-    global fast_answers_2, medium_answers_2, slow_answers_2,tg
+    global fast_answers_2, medium_answers_2, slow_answers_2
 
     if games_completed < 2:
         return
@@ -713,47 +802,65 @@ def scoreboard():
     total_slow     = slow_answers   + slow_answers_2
     total_answered = total_fast + total_medium + total_slow
 
+    total = total_fast + total_medium + total_slow
+
+    fast_acc   = (total_fast /total)*100
+    medium_acc = (total_medium / total)*100
+    slow_acc   = (total_slow / total)*100
+    instant_accuracy = (0.5 * fast_acc + 0.3 * medium_acc + 0.2 * slow_acc)
+
     document.getElementById("scoreboard_display").innerText = str(final_score)
-    if total_answered > 0:
-        instant_accuracy = round((total_fast / total_answered) * 100)
-    else:
-        instant_accuracy = 0
- 
     document.getElementById("accuracy_scoreboard").innerText = f"{instant_accuracy}%"
-    document.getElementById("fastanswers_scoreboard").innerText = f"{fast_answers+fast_answers_2}"
+    document.getElementById("fastanswers_scoreboard").innerText = str(total_fast)
 
+  
+    document.getElementById("accuracy-bar").style.setProperty("--bar-w", f"{instant_accuracy}%")
+    document.getElementById("fast-bar").style.setProperty("--bar-w", f"{min(total_fast * 20, 100)}%")
+    document.getElementById("score-bar").style.setProperty("--bar-w", f"{min(final_score * 2, 100)}%")
+
+    if total_answered>0:
+      raw = (total_fast*5) + (total_medium*3) + (total_slow*1)
+      max = 100
+      IQ  = 70 + (raw/max * 60)
+      document.getElementById("instant_iq_score").innerText = round(IQ)
     
 
-    if final_score >= 40:
-        badge_icon = "🥇"
-        badge_name = "Genius"
-        document.getElementById("compliment").innerText = "Great minds aren't born—they're built. Today, you've proven your potential."
-        document.getElementById("badge_scoreboard").innerText = "🥇Genius"
-    elif final_score >= 25:
-        badge_icon = "🥈"
-        badge_name = "Smart Thinker"
-        document.getElementById("compliment").innerText = "You're climbing fast. Stay consistent and the leaderboard will soon know your name."
-        document.getElementById("badge_scoreboard").innerText = "🥈Smart Thinker"
+    if total_fast == 20:
+        document.getElementById("answer_speed").innerText = "⚡100%"
+    elif total_fast >= 15:
+        document.getElementById("answer_speed").innerText = "⚡75%"
+    elif total_fast >= 10:
+        document.getElementById("answer_speed").innerText = "⚡50%"
+    elif total_fast >= 5:
+        document.getElementById("answer_speed").innerText = "⚡25%"
+    elif total_fast >= 1:
+        document.getElementById("answer_speed").innerText = "⚡10%"
     else:
-        badge_icon = "🥉"
-        badge_name = "Rising Mind"
+        document.getElementById("answer_speed").innerText = "⚡0%"
+
+ 
+    if final_score >= 40:
+        document.getElementById("compliment").innerText = "Great minds aren't born—they're built. Today, you've proven your potential."
+        document.getElementById("badge_scoreboard").innerText = "🥇 Genius"
+    elif final_score >= 25:
+        document.getElementById("compliment").innerText = "You're climbing fast. Stay consistent and the leaderboard will soon know your name."
+        document.getElementById("badge_scoreboard").innerText = "🥈 Smart Thinker"
+    else:
         document.getElementById("compliment").innerText = "Success isn't measured by one game. Every attempt makes you smarter than yesterday."
-        document.getElementById("badge_scoreboard").innerText = "🥉Rising Mind"
+        document.getElementById("badge_scoreboard").innerText = "🥉 Rising Mind"
 
-    document.getElementById("result-badge-icon").innerText = badge_icon
-    document.getElementById("result-badge-name").innerText = badge_name
-    
-
+  
     async def save_and_rank():
         global current_user
 
+   
         name = ""
         try:
             name = current_user.name
-        except Exception:
+        except:
             try:
                 name = current_user["name"]
-            except Exception:
+            except:
                 pass
 
         if not name:
@@ -763,12 +870,19 @@ def scoreboard():
         tg = 0
         try:
             tg = int(current_user.total_games or 0)
-        except Exception:
+        except:
             try:
                 tg = int(current_user["total_games"] or 0)
-            except Exception:
+            except:
                 pass
         tg += 1
+
+     
+        limit_result = await window.increaseDailyPlay(name)
+
+        if not limit_result.allowed:
+            document.getElementById("compliment").innerText = str(limit_result.message)
+            return
 
         await window.updateScore(
             name,
@@ -776,26 +890,18 @@ def scoreboard():
             total_fast,
             total_medium,
             total_slow,
-            tg
+            tg,
+            instant_accuracy 
         )
 
+        # Get rank
         rank = await window.getUserRank(name)
         if rank:
             document.getElementById("result-rank").innerText = f"#{rank}"
         else:
             document.getElementById("result-rank").innerText = "—"
 
-        try:
-            current_user.total_score    = final_score
-            current_user.fast_answers   = total_fast
-            current_user.medium_answers = total_medium
-            current_user.slow_answers   = total_slow
-            current_user.total_games    = tg
-        except Exception:
-            pass
-
     asyncio.create_task(save_and_rank())
-
 
 def _update_games_completed_btn():
     remaining = 2 - games_completed
