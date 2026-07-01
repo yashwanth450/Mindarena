@@ -1,3 +1,38 @@
+function loadPyScript(targetSectionId) {
+    document.getElementById("loader").style.display = "flex";
+    document.getElementById("loader-message").innerText = "Please be patience...";
+
+    if (!window._pyscriptLoaded) {
+        window._pyscriptLoaded = true;
+
+        const link = document.createElement("link");
+        link.rel = "stylesheet";
+        link.href = "https://pyscript.net/releases/2026.3.1/core.css";
+        document.head.appendChild(link);
+
+        const script = document.createElement("script");
+        script.type = "module";
+        script.src = "https://pyscript.net/releases/2026.3.1/core.js";
+        document.body.appendChild(script);
+    }
+
+    const checkReady = setInterval(() => {
+        if (window._pythonReady) {
+            clearInterval(checkReady);
+            document.getElementById("loader").style.display = "none";
+            document.getElementById("sectionmain_page").style.display = "none";
+            document.getElementById(targetSectionId).style.display = "block";
+        }
+    }, 200);
+}
+
+document.getElementById("create_new_profile").addEventListener("click", () => {
+    loadPyScript("section_new_profile");
+});
+
+document.getElementById("login_button").addEventListener("click", () => {
+    loadPyScript("section_login");
+});
 const SUPABASE_URL = "https://aouumcwtemruqcxquigd.supabase.co";
 const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFvdXVtY3d0ZW1ydXFjeHF1aWdkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIwMTY5MTYsImV4cCI6MjA5NzU5MjkxNn0.OpLIfmiqcvK1eh0zjnQj0vKsyKUv47d4MZ_hJbBKBOc";
 
@@ -69,6 +104,9 @@ async function increaseDailyPlay(name) {
 ///////////////////////////////// instruction page popup///////////////////////////////////////////////////////////
 document.getElementById("closeModal").addEventListener("click", () => {
     document.getElementById("modal").classList.remove("show");
+});
+document.getElementById("closeModal-scoreboard").addEventListener("click", () => {
+    document.getElementById("modal-scoreboard").classList.remove("show");
 });
 
 //////////////////////////////////////////////////////////////profile section/////////////////////////////////////
@@ -157,13 +195,13 @@ document.getElementById("contact-send").addEventListener("click", async () => {
     }
 
     document.getElementById("contact-msg").value = "";
-    alert("✅ Sent! Thank you for your feedback #SyrX");
+    alert("✅ Sent! Thank you for your feedback @SyrX");
 });
 
 /////////////////////////////////////////updating section/////////////////////////////////////////////////
-async function updateScore(name, finalScore, fastAnswers, mediumAnswers, slowAnswers, totalGames) {
+async function updateScore(name, finalScore, fastAnswers, mediumAnswers, slowAnswers, totalGames,iq) {
     return await callEdge("update-score", {
-        name, finalScore, fastAnswers, mediumAnswers, slowAnswers, totalGames
+        name, finalScore, fastAnswers, mediumAnswers, slowAnswers, totalGames,iq
     });
 }
 

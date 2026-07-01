@@ -1,6 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Bree+Serif&family=Caveat:wght@400;700&family=Lobster&family=Monoton&family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Playfair+Display+SC:ital,wght@0,400;0,700;1,700&family=Playfair+Display:ital,wght@0,400;0,700;1,700&family=Roboto:ital,wght@0,400;0,700;1,400;1,700&family=Source+Sans+Pro:ital,wght@0,400;0,700;1,700&family=Work+Sans:ital,wght@0,400;0,700;1,700&display=swap');
 
-
+py-config, py-script {
+    display: none;
+}
 /* ============================================================
    02. RESET & BASE
 ============================================================ */
@@ -1096,7 +1098,8 @@ input {
 }
 
 .opt,
-.opt_2 {
+.opt_2,
+.opt_3 {
   width: 100%;
   margin: 5px 0;
   padding: 10px 12px;
@@ -1115,7 +1118,8 @@ input {
 }
 
 .opt:hover,
-.opt_2:hover {
+.opt_2:hover,
+.opt_3:hover {
   background: #222;
   border-color: #ffd700;
   color: #ffd700;
@@ -1169,7 +1173,14 @@ input {
   white-space: nowrap;
   flex-shrink: 0;
 }
-
+.exit_scoreboard{
+  background: #fb923c;
+  color: #0d1b2e;
+  padding: 6px 12px;
+  border-radius: 8px;
+  text-align:center;
+  border: none;
+}
 
 .progress-bar-bg {
   height: 4px;
@@ -1294,6 +1305,7 @@ input {
   background: #0d0f1c;
   overflow: hidden;
   padding: 32px 18px;
+  display: flex;
 
 }
 

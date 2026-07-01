@@ -68,7 +68,13 @@ serve(async (req) => {
     const newSlowAnswers   = (userData.slow_answers || 0) + slowAnswers
     const totalAnswers     = newFastAnswers + newMediumAnswers + newSlowAnswers
     const overallAccuracy  = totalAnswers > 0
-      ? Math.round((newFastAnswers / totalAnswers) * 100) : 0
+      ?  ((newFastAnswers /totalAnswers)*100)*0.5+
+        ((newMediumAnswers / totalAnswers)*100)*0.3+
+        ((newSlowAnswers / totalAnswers)*100)*0.2
+      : 0
+    const  overallIQ = totalGames > 0
+      ? Math.round(100+((newFastAnswers*6.5+newMediumAnswers*5+newSlowAnswers*3.5)/ (100*totalGames)-0.5)*60)
+      : 0
 
     const { error: updateError } = await supabase
       .from("users")
@@ -78,8 +84,9 @@ serve(async (req) => {
         medium_answers: newMediumAnswers,
         slow_answers:   newSlowAnswers,
         total_games:    totalGames,
-        accuracy:       overallAccuracy,
+        avg_accuracy:       overallAccuracy,
         total_answers:  totalAnswers,
+        avg_iq: overallIQ
       })
       .eq("name", name)
 
@@ -93,7 +100,8 @@ serve(async (req) => {
     return new Response(JSON.stringify({ 
       success: true,
       newTotalScore,
-      overallAccuracy
+      overallAccuracy,
+      overallIQ
     }), { headers: { ...corsHeaders, "Content-Type": "application/json" } })
 
   } catch (err) {
