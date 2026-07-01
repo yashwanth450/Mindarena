@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="iq.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
+    <!-- NEW - add defer to each -->
+    <script defer src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script defer src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <title>MIND ARENA</title>
+</head>
+
+<body>
+    <div id="loader" style="display:none;">
+        <div class="loader-overlay">
+            <div class="loader-popup">
+                <p class="loader-please-wait">Please Wait...</p>
+                <p class="loader-message" id="loader-message">Creating your account...</p>
+                <div class="loader-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="loader-divider"></div>
+                <p class="loader-powered">POWERED BY SYRX</p>
+            </div>
+        </div>
+    </div>
+    <div id="loader-game" style="display:none;">
+        <div class="loader-overlay">
+            <div class="loader-popup">
+                <p class="loader-please-wait">Ready to Play?</p>
+
+                <div class="loader-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- MAIN PAGE -->
+    <div id="sectionmain_page" class="sectionmain_page">
+        <div class="container_main d-flex flex-column align-items-center justify-content-center">
+
+            <div class="amber-badge">✦ Season Live</div>
+            <h1 class="amber-logo">Mind<span>Striker</span></h1>
+            <p class="amber-tag">Train. Compete. Improve.</p>
+
+            <div class="amber-card">
+                <button id="create_new_profile" class="amber-btn1">🚀 Create New Profile</button>
+                <div class="amber-sep">
+                    <div class="amber-sl"></div>
+                    <span class="amber-so">or</span>
+                    <div class="amber-sl"></div>
+                </div>
+                <button id="login_button" class="amber-btn2">🔑 Already Have an Account</button>
+
+                <div class="amber-feats">
+                    <div class="amber-feat">
+                        <div class="amber-fi">⚡</div>
+                        <div class="amber-fl">Speed</div>
+                    </div>
+                    <div class="amber-feat">
+                        <div class="amber-fi">🎯</div>
+                        <div class="amber-fl">Accuracy</div>
+                    </div>
+                    <div class="amber-feat">
+                        <div class="amber-fi">🏅</div>
+                        <div class="amber-fl">Ranks</div>
+                    </div>
+                </div>
+            </div>
+
+            <p class="amber-foot">Presented by <span>SyrX</span></p>
+
+        </div>
+    </div>
+
+
+    <div id="section_new_profile" class="col-12 p-0" style="display:none;">
+        <div class="background-login d-flex flex-column align-items-center justify-content-center">
+            <div class="login-card">
+                <h1 class="main-heading">Create New Profile</h1>
+                <p class="para text-center">Please fill in the details below:</p>
+                <label class="para">Name:</label>
+                <input type="text" id="reg-name" placeholder="Enter your name" />
+                <label class="para">Age:</label>
+                <input type="text" id="reg-age" placeholder="Age (in years)" />
+                <label class="para">Password:</label>
+                <input type="password" id="reg-password" placeholder="Min 6 characters" />
+                <p id="reg-error" style="color:#ff4444; font-size:13px; text-align:center;"></p>
+                <button type="button" id="btn-register" class="card-button">Create Account →</button>
+                <p class="ad text-center">Presented by SyrX</p>
+            </div>
+        </div>
+    </div>
+    <div id="section_login" class="col-12 p-0" style="display:none;">
+        <div class="background-login d-flex flex-column align-items-center justify-content-center">
+            <div class="login-card">
+                <h1 class="main-heading">Login</h1>
+                <p class="para text-center">Please enter your details:</p>
+                <label class="para">Name:</label>
+                <input type="text" id="login-name" placeholder="Enter your name" />
+                <label class="para">Password:</label>
+                <input type="password" id="login-password" placeholder="Enter your password" />
+                <p id="login-error" style="color:#ff4444; font-size:16px; text-align:center;"></p>
+                <button type="button" id="btn-login" class="card-button">Login →</button>
+                <p class="ad text-center">Presented by SyrX</p>
+            </div>
+        </div>
+    </div>
+    <div id="sectiontest" class="col-12 col-xl-12 p-0" style="display:none;">
+        <div class=" background ">
+            <div class="d-flex flex-row justify-content-end align-items-end flex-wrap  p-4">
+                <ul class="nav   justify-content-end">
+                    <li class="nav-item">
+                        <a class="nav-link" style="color:white;" id="openBtn" href="#">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" style="color:white;" id="leaderboard_status" href="#">Leaderboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="contact_link" href="#">Contact</a>
+                    </li>
+
+                </ul>
+            </div>
+            <div class="d-flex flex-column justify-content-center flex-item-center flex-wrap">
+
+                <p class="tag text-center mt-5 ">Complete this <span class="tag-highlighter">3 games</span> to unlock
+                    your IQ
+                    score.
+                </p>
+                <div class="d-flex flex-row justify-content-center align-items-center flex-wrap p-4">
+                    <div class="games col-sm-12 col-12 col-md-6 col-lg-3  col-xl-3 position-relative">
+                        <div class="d-flex flex-row ">
+                            <img src="https://img.freepik.com/premium-vector/repetition-number-twenty-forming-logo-design-showcasing-numerical-pattern-poster-that-captures-essence-our-open-positions_585735-34266.jpg"
+                                alt="number-series" class="game-image" />
+                            <span id="tick-pattern" class="tick-mark " style="display:none;">✓</span>
+                        </div>
+                        <br>
+                        <h2 class="game-heading ">Pattern Arena</h2>
+                        <p class="game-para ">Decode. Adapt. Conquer.</p>
+                        <br>
+                        <button class="animated-button" id="play-pattern">Play</button>
+                    </div>
+                    <div class="games col-sm-12 col-12 col-md-6 col-lg-3  col-xl-3">
+                        <img src="https://cdn.iconscout.com/icon/premium/png-256-thumb/missing-number-sticker-icon-svg-download-png-4416041.png"
+                            alt="number-series" class="game-image" />
+                        <span id="tick-logic" class="tick-mark " style="display:none;">✓</span>
+                        <br>
+                        <h2 class="game-heading ">Logic Clash</h2>
+                        <p class="game-para ">Logic Wins Wars.</p>
+                        <br>
+                        <button class="animated-button" id="play-logic">Play</button>
+                    </div>
+                    <div class="games col-sm-12 col-12 col-md-6 col-lg-3 ">
+                        <img src="https://cdn-icons-png.flaticon.com/512/7880/7880465.png" alt="number-series"
+                            class="game-image" />
+                        <span id="tick-number" class="tick-mark " style="display:none;">✓</span>
+                        <br>
+                        <h2 class="game-heading ">Number Duel</h2>
+                        <p class="game-para ">Where Numbers Decide Victory.</p>
+                        <br>
+                        <button class="animated-button" id="play-number">Play</button>
+                    </div>
+
+                </div>
+                <div class="d-flex flex-row justify-content-center align-items-center flex-wrap m-2">
+                    <button id="games_completed" class="button-completed ">complete 3 games to go..</button>
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+    <div class="modal" id="modal">
+        <div class="modal-card">
+            <h1>👋 Hello Genius</h1>
+            <h3 class="rules-title">Game Rules</h3>
+
+            <p>➤ You can start with <b>any game</b> you like.</p>
+            <p class="important">➤ Each question has a <b>15-second timer</b>. Answer before time runs out.</p>
+            <p>➤ Complete <b>3 games</b> to unlock your IQ Score.</p>
+            <p class="important">➤ Don't refresh — it will <b>reset your session</b>.</p>
+            <p>➤ Check the <b>Leaderboard</b> to compare with other players.</p>
+
+            <div class="btn-group-modal">
+                <button class="close-btn-modal" id="closeModal">Let's Go 🚀</button>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="sectionPatternArena" class="col-12 p-0" style="display:none;">
+        <div class="back-reasoning d-flex flex-column justify-content-center align-items-center">
+            <h1 class="head-reasoning">Pattern Arena</h1>
+            <div class="card-reasoning m-3">
+                <div class="d-flex flex-row align-items-center" style="margin-bottom:6px;">
+                    <p id="exit" class="exit mb-0">EXIT</p>
+                    <p id="question-number" class="question-number mb-0 mx-auto"></p>
+                    <p id="score-card" class="scoreboard mb-0">SCORE: 0</p>
+                    <h3 id="timer" class="timer mb-0 ml-3">Time:15</h3>
+                </div>
+                <div class="progress-bar-bg" id="progress-bar-bg">
+                    <div class="progress-bar-fill" id="progress-bar"></div>
+                </div>
+
+                <p id="pattern-instruction" class="pattern-instruction">Find the missing pattern:</p>
+                <div id="pattern-display"></div>
+
+                <div id="options">
+                    <button class="opt">1</button>
+                    <button class="opt">2</button>
+                    <button class="opt">3</button>
+                    <button class="opt">4</button>
+                </div>
+                <h3 id="msg" class="msg"></h3>
+                <div class="d-flex flex-row justify-content-center">
+                    <button class="nxt" id="next" style="display:none;">NEXT →</button>
+                    <button class="nxt" id="continue" style="display:none;">Continue →</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="sectionLogicClash" class="col-12 p-0" style="display:none;">
+        <div class="back-reasoning d-flex flex-column justify-content-center align-items-center">
+
+            <h1 class="head-reasoning">Logic Clash</h1>
+            <div class="card-reasoning m-3">
+                <div class="d-flex flex-row align-items-center" style="margin-bottom:6px;">
+                    <p id="exit_2" class="exit mb-0">EXIT</p>
+                    <p id="question-number_2" class="question-number mb-0 mx-auto"></p>
+                    <p id="score-card_2" class="scoreboard mb-0">SCORE: 0</p>
+                    <h3 id="timer_2" class="timer mb-0 ml-3">Time:15</h3>
+                </div>
+                <div class="progress-bar-bg" id="progress-bar-bg_2">
+                    <div class="progress-bar-fill" id="progress-bar_2"></div>
+                </div>
+                <h1 class="question" id="question_2"></h1>
+                <div id="options_2">
+                    <button class=" opt_2">1</button>
+                    <button class="opt_2">2</button>
+                    <button class="opt_2">3</button>
+                    <button class="opt_2">4</button>
+                </div>
+                <h3 id="msg_2" class="msg"></h3>
+                <div class="d-flex flex-row justify-content-center">
+                    <button class="nxt" id="next_2" style="display:none;">NEXT →</button>
+                    <button class="nxt" id="continue_2" style="display:none;">Continue →</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="sectionNumberDuel" class="col-12 p-0" style="display:none;">
+        <div class="back-reasoning d-flex flex-column justify-content-center align-items-center">
+
+            <h1 class="head-reasoning">Number Duel</h1>
+            <div class="card-reasoning m-3">
+                <div class="d-flex flex-row align-items-center" style="margin-bottom:6px;">
+                    <p id="exit_3" class="exit mb-0">EXIT</p>
+                    <p id="question-number_3" class="question-number mb-0 mx-auto"></p>
+                    <p id="score-card_3" class="scoreboard mb-0">SCORE: 0</p>
+                    <h3 id="timer_3" class="timer mb-0 ml-3">Time:15</h3>
+                </div>
+                <div class="progress-bar-bg" id="progress-bar-bg_3">
+                    <div class="progress-bar-fill" id="progress-bar_3"></div>
+                </div>
+                <h1 class="question" id="question_3"></h1>
+                <div id="options_3">
+                    <button class=" opt_3">1</button>
+                    <button class="opt_3">2</button>
+                    <button class="opt_3">3</button>
+                    <button class="opt_3">4</button>
+                </div>
+                <h3 id="msg_3" class="msg"></h3>
+                <div class="d-flex flex-row justify-content-center">
+                    <button class="nxt" id="next_3" style="display:none;">NEXT →</button>
+                    <button class="nxt" id="continue_3" style="display:none;">Continue →</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="offcanvas" class="offcanvas">
+        <button id="closeBtn">&times;</button>
+        <div class="profile-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor"
+                class="bi bi-person-circle" viewBox="0 0 16 16">
+                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                <path fill-rule="evenodd"
+                    d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
+            </svg>
+        </div>
+        <h1 style="font-family:'Times New Roman', Times, serif" id="profile-name">..</h1>
+        <div class="profile-container mt-4">
+            <div class="profile-card">
+                <h1 style="font-size:16px;">Age</h1>
+                <p id="profile-age"></p>
+            </div>
+            <div class="profile-card">
+                <h1 style="font-size:16px;">Rank</h1>
+                <p id="profile-rank" style="font-size:20px"></p>
+            </div>
+            <div class="profile-card">
+                <h1 style="font-size:16px;">Badge</h1>
+                <p id="profile-badge" style="font-size:16px"></p>
+            </div>
+            <div class="profile-card">
+                <h1 style="font-size:16px;">Avg IQ</h1>
+                <p id="profile-iqscore"></p>
+            </div>
+            <div class="profile-card">
+                <h1 style="font-size:16px;">Games Played</h1>
+                <p id="games-played"></p>
+            </div>
+            <div class="profile-card">
+                <h1 style="font-size:16px;">Correct Answers</h1>
+                <p id="correct-answers"></p>
+            </div>
+            <div class="profile-card">
+                <h1 style="font-size:16px;"> Avg Accuray%</h1>
+                <p id="accuracy"></p>
+            </div>
+            <div class="profile-card">
+                <h1 style="font-size:16px;">XP Points</h1>
+                <p id="xp"></p>
+            </div>
+            <div class="profile-card-quote">
+                <h1 style="font-size:16px;"></h1>
+                <p id="profile-quote" class="text-center"></p>
+            </div>
+
+        </div>
+
+    </div>
+    <!-- LEADERBOARD OFFCANVAS -->
+    <div id="offcanvas-lb" class="offcanvas">
+        <button id="closeBtnLb">&times;</button>
+        <div style="text-align:center; padding: 10px 0 4px;">
+            <h2 style="font-family:'Times New Roman',serif; color:#e2b96f; margin:4px 0 2px; font-size:22px;">
+                Leaderboard</h2>
+            <p style="font-size:12px; color:#8899aa; margin:10px;">Top strikerS · All time</p>
+        </div>
+        <div id="lb-list">
+            <div style="text-align:center; padding:30px; color:#8899aa; font-size:14px;">Loading...</div>
+        </div>
+    </div>
+    <div id="overlay-lb" class="overlay-profile"></div>
+    <div class="modal" id="modal-scoreboard">
+        <div class="modal-card">
+            <h1>MindStriker</h1>
+            <h3 class="rules-title">Awarness</h3>
+
+            <p>➤ In this <b>MindStriker</b> session, you'll see your <b>instant accuracy</b> and <b>IQ score</b> for
+                that game. For your <b>overall average IQ</b> and accuracy, check your <b>Profile</b>.</p>
+            <p class="important">➤ Play every game <b>tactically and smartly</b> to earn more <b>XP points</b> and climb
+                the <b>Leaderboard</b> — XP is based on your performance in each session.</p>
+            <p>➤ Found a bug or have a suggestion? Share your <b>feedback</b> with us — we'll respond!
+            <p class="text-center">@SyrX0fficial</p>
+
+            <div class="btn-group-modal">
+                <button class="close-btn-modal" id="closeModal-scoreboard">play again..</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="sectionscoreboard" class="col-12 bg-scorecard  flex-column" style="display:none;">
+        <p class="brand">MindArena</p>
+        <div class="d-flex flex-column justify-content-center align-items-center ">
+
+            <div class="card-box2">
+                <div class="back-rank m-2 shadow">
+                    <h1 class="text-cesnter score-rank">RANK</h1>
+                    <p id="result-rank" class="scoreboard_display">#0</p>
+                </div>
+                <div class="back-iqscore shadow-lg">
+                    <h1 class="text-white mt-3 score-score">IQ SCORE</h1>
+                    <h2 id="instant_iq_score" class="text-white mt-5">0</h2>
+                    <p class="scoreboard_display"></p>
+                </div>
+                <div class="back-badge m-2 shadow ">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                        class="bi bi-award" viewBox="0 0 16 16">
+                        <path
+                            d="M9.669.864 8 0 6.331.864l-1.858.282-.842 1.68-1.337 1.32L2.6 6l-.306 1.854 1.337 1.32.842 1.68 1.858.282L8 12l1.669-.864 1.858-.282.842-1.68 1.337-1.32L13.4 6l.306-1.854-1.337-1.32-.842-1.68zm1.196 1.193.684 1.365 1.086 1.072L12.387 6l.248 1.506-1.086 1.072-.684 1.365-1.51.229L8 10.874l-1.355-.702-1.51-.229-.684-1.365-1.086-1.072L3.614 6l-.25-1.506 1.087-1.072.684-1.365 1.51-.229L8 1.126l1.356.702z" />
+                        <path d="M4 11.794V16l4-1 4 1v-4.206l-2.018.306L8 13.126 6.018 12.1z" />
+                    </svg>
+                    <h1 class="text-center mb-2 score-badge">BADGE</h1>
+                    <br>
+                    <p id="badge_scoreboard" class="badge-name">-</p>
+                </div>
+            </div>
+            <div class="card-box1">
+                <div class="back-accuracy m-2">
+                    <h1 style=" font-size:26px;" class="colour-palate">Accuracy</h1>
+                    <p class="content-palate" id="accuracy_scoreboard">0%</p>
+                    <div class="sb-bar-bg">
+                        <div class="sb-bar-fill" id="accuracy-bar" style="--bar-w:0%"></div>
+                    </div>
+                </div>
+                <div class="fast-ans m-2">
+                    <h1 style=" font-size:26px;" class="colour-palate">Fast-Ans</h1>
+                    <p class="content-palate" id="fastanswers_scoreboard">0</p>
+                    <div class="sb-bar-bg">
+                        <div class="sb-bar-fill" id="fast-bar" style="--bar-w:0%"></div>
+                    </div>
+                </div>
+                <div class="back-score m-2">
+                    <h1 style=" font-size:26px;" class="colour-palate">Score</h1>
+                    <p id="scoreboard_display" class="scoreboard_display content-palate">0</p>
+                    <div class="sb-bar-bg">
+                        <div class="sb-bar-fill" id="score-bar" style="--bar-w:0%"></div>
+                    </div>
+                </div>
+                <div class="back-streak m-2">
+                    <h1 style=" font-size:26px;" class="colour-palate">Answer Speed</h1>
+                    <p id="answer_speed" class="scoreboard_display content-palate">0</p>
+                    <div class="sb-bar-bg">
+                        <div class="sb-bar-fill" id="speed-bar" style="--bar-w:0%"></div>
+                    </div>
+                </div>
+            </div>
+            <h1 class="compliment" id="compliment"></h1>
+            <br>
+             <button id="exit_scoreboard" class="exit_scoreboard">Play Again</button>
+        </div>
+    </div>
+    <!-- CONTACT OFFCANVAS -->
+    <div id="offcanvas-contact" class="offcanvas">
+        <button id="closeBtnContact">&times;</button>
+
+        <p class="contact-support-label">Support</p>
+        <div class="contact-brain-icon">🧠</div>
+        <p class="contact-app-name">Mind<span>Striker</span></p>
+        <p class="contact-app-sub">Questions or feedback?<br>We'd love to hear from you.</p>
+
+        <div class="contact-links-grid">
+            <a href="YOUR_TWITTER" target="_blank" class="contact-link-btn">
+                <span class="contact-link-icon">🐦</span>
+                <span class="contact-link-label">Twitter</span>
+            </a>
+            <a href="YOUR_GITHUB" target="_blank" class="contact-link-btn">
+                <span class="contact-link-icon">💻</span>
+                <span class="contact-link-label">GitHub</span>
+            </a>
+            <a href="YOUR_LINKEDIN" target="_blank" class="contact-link-btn">
+                <span class="contact-link-icon">💼</span>
+                <span class="contact-link-label">LinkedIn</span>
+            </a>
+            <a href="mailto:YOUR_EMAIL" class="contact-link-btn">
+                <span class="contact-link-icon">✉️</span>
+                <span class="contact-link-label">Email</span>
+            </a>
+        </div>
+
+        <p class="contact-fb-label">Send Feedback</p>
+        <textarea id="contact-msg" class="contact-textarea" placeholder="What's on your mind?"
+            maxlength="300"></textarea>
+        <button id="contact-send" class="contact-send-btn">SEND MESSAGE</button>
+
+        <p class="contact-footer">PRESENTED BY <span>SYRX</span> · 2026</p>
+    </div>
+    <div id="overlay-contact" class="overlay-profile"></div>
+
+
+
+
+
+    <div id="overlay-profile" class="overlay-profile"></div>
+    <script type="text/javascript"
+        src="https://new-assets.ccbp.in/frontend/content/static-ccbp-ui-kit/static-ccbp-ui-kit.js">
+        </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="iq.js"></script>
+
+    <py-config>
+        [[fetch]]
+        files = ["iq.py"]
+    </py-config>
+
+    <py-script>
+        from iq import *
+    </py-script>
+
+
+
+
+</body>
+
+</html>
